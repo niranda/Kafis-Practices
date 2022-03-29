@@ -1,0 +1,9 @@
+﻿namespace Practice.Domain.Core.Common.Constants
+{
+    public static class RoleNameConstants
+    {
+        public const string Admin = "Admin";
+        public const string Teacher = "Teacher";
+        public const string Student = "Student";
+    }
+}
