@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="wrapper">
+    <div class="info">
+      <div>{{'TEACHERS.FULLNAME' | translate}}:</div>
+      <div>{{ teacher.fullName }}</div>
+      <div>{{'TEACHERS.POSITION' | translate}}:</div>
+      <div>{{ teacher.position }}</div>
+    </div>
+    <div class="controlls">
+      <button mat-mini-fab class="main-round-btn btn-edit" (click)="editTeacher()">
+        <img src="assets/images/control-icons/icons-edit.svg" />
+      </button>
+      <button mat-mini-fab class="main-round-btn btn-remove" (click)="deleteTeacher()">
+        <img src="assets/images/control-icons/icons-delete.svg" />
+      </button>
+    </div>
+  </div>
+  <div class="students" *ngIf="teacher.students?.length">
+    <p style="padding-bottom: 10px;">{{ 'TEACHERS.STUDENTS' | translate }}:</p>
+    <p *ngFor="let student of teacher.students">{{ student.fullName }}</p>
+  </div>
+</div>

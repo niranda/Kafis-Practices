@@ -1,0 +1,19 @@
+@import './settings-common.scss';
+
+:host {
+  display: block;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  width: 75%;
+  margin-left: calc(25% / 2);
+  box-shadow: 0 16px 16px rgba(0, 0, 0, 0.5);
+
+  .other-settings-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: calc(1.5em + 10px) 0 0;
+    width: 100%;
+  }
+}

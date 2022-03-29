@@ -1,0 +1,7 @@
+<h1 class="title" mat-dialog-title>{{ 'DIALOG.LOGOUT_HEADER' | translate }}</h1>
+<div class="description" mat-dialog-content>{{ 'DIALOG.LOGOUT_CONTENT' | translate }}</div>
+<div class="buttons" mat-dialog-actions>
+  <button style="opacity: 0; pointer-events: 0; position: absolute;"></button>
+  <button mat-button mat-dialog-close class="main-btn-primary" (click)="onLogout()">{{ 'DIALOG.LOGOUT' | translate }}</button>
+  <button mat-button mat-dialog-close class="main-btn">{{ 'DIALOG.CLOSE' | translate }}</button>
+</div>

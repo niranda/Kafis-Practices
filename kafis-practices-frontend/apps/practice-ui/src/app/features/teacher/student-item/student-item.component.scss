@@ -1,0 +1,47 @@
+@import 'variables';
+
+:host {
+  display: flex;
+  border-bottom: 1px solid $primary-color;
+}
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  .info {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(min-content, 1fr));
+    div {
+      min-width: min-content;
+      margin: auto 0;
+      margin-right: 20px;
+      padding-bottom: 20px;
+      font-family: 'Montserrat';
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.06;
+      color: $text-color-primary;
+      &:nth-child(odd) {
+        font-weight: 600;
+        color: $text-color-secondary;
+      }
+    }
+  }
+}
+.controlls {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  .btn-edit {
+    background-color: $primary-color;
+  }
+  .btn-download {
+    margin-top: 20px;
+    background-color: $header-bgr-color;
+    img {
+      width: 66.6%;
+      height: 66.6%;
+    }
+  }
+}

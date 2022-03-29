@@ -1,0 +1,30 @@
+@import '../../settings-common.scss';
+
+:host {
+  display: flex;
+  width: 100%;
+  margin: 30px 0;
+  padding: 0 5%;
+  .attorney-input {
+    width: 100%;
+  }
+  .round-btn {
+    margin: 0 10px;
+    background-color: $primary-color;
+    img {
+      width: 50%;
+      height: 50%;
+    }
+    &:disabled {
+      pointer-events: none;
+      filter: brightness(0.8);
+    }
+  }
+
+  .btn-cancel {
+    img {
+      width: 25%;
+      height: 25%;
+    }
+  }
+}

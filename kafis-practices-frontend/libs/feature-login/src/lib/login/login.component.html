@@ -1,0 +1,16 @@
+<h2>{{ 'AUTH.LOGIN' | translate }}</h2>
+<form [formGroup]="loginFormGroup" autocomplete="off" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <practice-input [id]="'username'" [type]="'text'" [placeholder]="'AUTH.USERNAME_INPUT' | translate"
+            [hasOnChangeEvent]="true" [src]="'assets/images/auth-icons/user.svg'" formControlName="username"
+            [labelText]="'AUTH.USERNAME' | translate" required></practice-input>
+    </div>
+    <div class="form-group">
+        <practice-input [id]="'password'" [type]="'password'" [placeholder]="'xxxxxxxxxxxx'"
+            [hasOnInputEvent]="true" [src]="'assets/images/auth-icons/lock.svg'" formControlName="password"
+            [labelText]="'AUTH.PASSWORD' | translate" required></practice-input>
+    </div>
+    <div class="form-group">
+        <button mat-button type="submit" class="main-btn-primary" [disabled]="!loginFormGroup.valid">{{ 'AUTH.LOG_IN' | translate }}</button>
+    </div>
+</form>

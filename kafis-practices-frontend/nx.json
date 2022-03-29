@@ -1,0 +1,38 @@
+{
+  "npmScope": "practice",
+  "affected": { "defaultBase": "master" },
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "tsconfig.base.json": "*",
+    "tslint.json": "*",
+    ".eslintrc.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+    }
+  },
+  "projects": {
+    "practice-ui": { "tags": [] },
+    "practice-ui-e2e": { "tags": [], "implicitDependencies": ["practice-ui"] },
+    "practice-ui-admin": { "tags": [] },
+    "practice-ui-admin-e2e": {
+      "tags": [],
+      "implicitDependencies": ["practice-ui-admin"]
+    },
+    "environment": { "tags": [] },
+    "feature-login": { "tags": [] },
+    "enums": { "tags": [] },
+    "ui-components-ui-elements": { "tags": [] },
+    "ui-styles": { "tags": [] },
+    "ui-components-header": { "tags": [] },
+    "ui-components-dialogs": { "tags": [] },
+    "ui-components-tables": { "tags": [] },
+    "common": { "tags": [] },
+    "interfaces": { "tags": [] },
+    "utils": { "tags": [] }
+  }
+}

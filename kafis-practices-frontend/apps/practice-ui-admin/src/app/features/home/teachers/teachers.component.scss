@@ -1,0 +1,35 @@
+@import 'variables';
+
+:host {
+  display: block;
+  width: 100%;
+  padding: 20px 0;
+}
+.header {
+  .button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 40px;
+    button {
+      padding: 0 60px;
+      width: min-content;
+      height: 50px;
+    }
+  }
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 60px 100px;
+}
+
+mat-spinner {
+  margin: 10% auto 0;
+}
+
+@media (max-width: 900px) {
+  :host {
+    padding: 20px 5% 0;
+  }
+}

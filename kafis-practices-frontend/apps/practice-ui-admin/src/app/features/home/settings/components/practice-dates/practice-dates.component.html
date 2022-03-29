@@ -1,0 +1,31 @@
+<mat-spinner color="accent" diameter="160" *ngIf="!GRADE_LEVELS || !GRADE_LEVELS.length; else content"></mat-spinner>
+<ng-template #content>
+  <form class="form">
+    <div class="label">
+      <span>
+        {{ "SETTINGS.DATE_SETTINGS" | translate }}
+      </span>
+    </div>
+    <div class="grade-item" *ngFor="let grade of GRADE_LEVELS">
+      <span class="grade-level">{{upperFirstLetter(('SETTINGS.' + grade.name) | translate)}}</span>
+      <mat-form-field class="data-range" appearance="fill">
+        <mat-label>{{ 'SETTINGS.SELECT_DATE_RANGE' | translate }}</mat-label>
+        <mat-date-range-input [formGroup]="grade.range" [rangePicker]="picker">
+          <input matStartDate formControlName="startDate" placeholder="{{'SETTINGS.FROM_DATE' | translate}}">
+          <input matEndDate formControlName="endDate" placeholder="{{'SETTINGS.TO_DATE' | translate}}">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker touchUi></mat-date-range-picker>
+
+        <mat-error *ngIf="grade.range.controls.startDate.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+        <mat-error *ngIf="grade.range.controls.endDate.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+      </mat-form-field>
+    </div>
+    <button matRipple class="main-btn-primary save-btn" [disabled]="!isValidFrom()" (click)="saveDates()">
+      <img class="icon" src="assets/images/control-icons/icons-save.svg" alt="">
+      <span>
+        {{ 'COMMON.SAVE' | translate }}
+      </span>
+    </button>
+  </form>
+</ng-template>

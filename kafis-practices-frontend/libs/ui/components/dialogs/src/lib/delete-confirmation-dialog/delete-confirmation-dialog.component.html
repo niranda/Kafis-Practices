@@ -1,0 +1,7 @@
+<h1 class="title" mat-dialog-title>{{ headerText | translate }}</h1>
+<div class="description" mat-dialog-content>{{ contentText | translate }}</div>
+<div class="buttons" mat-dialog-actions>
+  <button style="opacity: 0; pointer-events: 0;"></button>
+  <button mat-button mat-dialog-close class="main-btn">{{ 'DIALOG.CLOSE' | translate }}</button>
+  <button mat-button mat-dialog-close class="main-btn-primary" (click)="onDelete()">{{ 'DIALOG.DELETE' | translate }}</button>
+</div>

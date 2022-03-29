@@ -1,0 +1,49 @@
+@import 'variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+practice-header {
+  padding: 0 30px 0 40px;
+  a {
+    font-size: 18px;
+    text-align: center;
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 4.5vw;
+    cursor: pointer;
+  }
+}
+.router-wrapper {
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  width: 100%;
+}
+
+@media(max-width: 1375px) {
+  practice-header {
+    .nav-links {
+      margin-right: 4vw;
+      a{
+        margin-left: 2vw;
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  practice-header {
+    .nav-links {
+      a {
+        margin-left: 3vw;
+      }
+    }
+    .logout-desk {
+      margin-left: auto;
+    }
+  }
+}

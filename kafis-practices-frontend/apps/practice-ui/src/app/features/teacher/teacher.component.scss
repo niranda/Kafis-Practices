@@ -1,0 +1,36 @@
+@import 'variables';
+
+:host {
+  display: block;
+  width: 100%;
+  padding: 20px 150px;
+  font-family: 'Montserrat';
+}
+
+.header {
+  font-size: 36px;
+  font-weight: 500;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  color: #2f2f2f;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 1fr));
+  gap: 40px 80px;
+}
+
+mat-spinner {
+  margin: 10% auto 0;
+}
+
+@media (max-width: 1000px) {
+  :host {
+    padding: 20px 5% 0;
+    .wrapper {
+      grid-template-columns: repeat(1, minmax(320px, 1fr));
+    }
+  }
+}
+

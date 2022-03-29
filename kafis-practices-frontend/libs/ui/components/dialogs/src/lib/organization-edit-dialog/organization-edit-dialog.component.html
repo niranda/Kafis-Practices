@@ -1,0 +1,26 @@
+<h1 class="title" mat-dialog-title *ngIf="!organization">{{'ORGANIZATIONS.ADD_ORGANIZATION' | translate}}</h1>
+<h1 class="title" mat-dialog-title *ngIf="organization">{{'ORGANIZATIONS.EDIT_ORGANIZATION' | translate}}</h1>
+<div class="description">
+  <form class="form" [formGroup]="organizationFormGroup" autocomplete="off" (ngSubmit)="onSubmit()">
+      <div class="data">
+        <div class="formGroup">
+          <practice-input class="name-input" [id]="'name'" [type]="'text'" [placeholder]="'ORGANIZATIONS.NAME_PLACEHOLDER' | translate"
+          formControlName="name" [error]="isInvalid('name')" [hasOnInputEvent]="true" [src]="" alt=""
+          [labelText]="'ORGANIZATIONS.NAME' | translate"></practice-input>
+          <label class="errors-label"
+            *ngIf="organizationFormGroup.get('name').touched && organizationFormGroup.get('name').errors?.required">{{'FORMS_VALIDATION.REQUIRED' | translate }}</label>
+        </div>
+        <div class="formGroup">
+          <practice-input class="city-input" [id]="'city'" [type]="'text'" [placeholder]="'ORGANIZATIONS.CITY_PLACEHOLDER' | translate"
+          formControlName="city" [error]="isInvalid('city')" [hasOnInputEvent]="true" [src]="" alt=""
+          [labelText]="'ORGANIZATIONS.CITY' | translate"></practice-input>
+          <label class="errors-label"
+            *ngIf="organizationFormGroup.get('city').touched && organizationFormGroup.get('city').errors?.required">{{'FORMS_VALIDATION.REQUIRED' | translate }}</label>
+        </div>
+      </div>
+    <div class="button-container" mat-dialog-actions>
+      <button mat-button mat-dialog-close class="main-btn-primary add-btn" type="submit" [disabled]="!organizationFormGroup.valid">{{ 'COMMON.SAVE' | translate }}</button>
+      <button mat-button mat-dialog-close class="main-btn cancel-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+    </div>
+  </form>
+</div>

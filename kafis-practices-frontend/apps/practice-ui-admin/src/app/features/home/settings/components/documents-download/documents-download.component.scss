@@ -1,0 +1,32 @@
+@import "../../settings-common.scss";
+
+:host {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: calc(1.5em + 30px) 10px 0;
+  width: 100%;
+  .label {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  button {
+    margin: 0 30px 20px;
+    padding: 0 3em 0 0.4em;
+    text-align: left;
+    width: min-content;
+    min-width: min-content;
+    .icon {
+      height: calc(100% - 0.5em);
+      transition: 0.3s;
+    }
+    &:active {
+      .icon {
+        transform: scale(0.96);
+        transition: 30ms;
+      }
+    }
+  }
+}

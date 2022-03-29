@@ -1,0 +1,87 @@
+<mat-spinner color="accent" diameter="160" *ngIf="!student; else content"></mat-spinner>
+<ng-template #content>
+  <div class="header animated-appearance">
+    {{ student.fullName }}
+  </div>
+  <div class="student-info animated-appearance">
+    <div>{{ 'STUDENTS.YEAR' | translate }}:</div>
+    <div>{{ student.year }}</div>
+    <div>{{ 'STUDENTS.GRADE_LEVEL' | translate }}:</div>
+    <div>{{ studentGradeLevels[student.gradeLevel] }}</div>
+    <div>{{ 'STUDENTS.SPECIALIZATION' | translate }}:</div>
+    <div>{{ student.specialization }}</div>
+    <div>{{ 'STUDENTS.SPECIALTY' | translate }}:</div>
+    <div>{{ student.specialty }}</div>
+    <div>{{ 'STUDENTS.GROUP_CODE' | translate }}:</div>
+    <div>{{ student.groupCode }}</div>
+  </div>
+  <div class="practice-info animated-appearance">
+    <div>{{ 'STUDENTS.ORGANIZATION' | translate }}:</div>
+    <div [class.hidden-value]="student.organization == null">{{ student.organization?.name }}</div>
+    <div>{{ 'ORGANIZATIONS.CITY' | translate }}:</div>
+    <div [class.hidden-value]="student.organization == null">{{ student.organization?.city }}</div>
+    <div>{{ 'STUDENTS.DATES' | translate }}:</div>
+    <div [class.hidden-value]="student.practiceDates == null">
+      {{ formatDate(student.practiceDates?.startDate) + ' - ' + formatDate(student.practiceDates?.endDate)}}
+    </div>
+    <div>{{ 'STUDENTS.TEACHER' | translate }} {{ 'STUDENTS.FROM_UNIVERSITY' | translate }}:</div>
+    <div [class.hidden-value]="student.teacher == null">{{ student.teacher?.position }}, {{ student.teacher?.fullName }}
+    </div>
+    <div>{{ 'STUDENTS.GRADE' | translate }}:</div>
+    <div [class.hidden-value]="student.grade == null">{{ student.grade }}</div>
+  </div>
+  <section class="file-section">
+    <div class="button-container animated-appearance">
+      <button mat-button class="main-btn-primary" (click)="getDiary()">
+        <img class="icon" src="assets/images/control-icons/icons-download-circular.svg" alt="">
+        <span>
+          {{ 'STUDENTS.LOAD_DIARY' | translate }}
+        </span>
+      </button>
+      <button mat-button class="main-btn-primary contract" (click)="getContract()">
+        <img class="icon" src="assets/images/control-icons/icons-download-circular.svg" alt="">
+        <span>
+          {{ 'STUDENTS.LOAD_CONTRACT' | translate }}
+        </span>
+      </button>
+    </div>
+    <div class="upload-file-wrapper">
+      <label class="upload-area" matRipple [class.file-is-exist]="file"
+        [class.file-uploaded]="student?.reportFileName && !file">
+        <input #fileInput type="file" multiple="false" accept="{{acceptedFileFormatsList}}"
+          (change)="uploadFile(fileInput.files)">
+        <ng-template [ngIf]="!file && !student?.reportFileName">
+          <img class="icon" src="assets/images/control-icons/icons-upload.svg" alt="">
+          <span>
+            {{ 'STUDENTS.UPLOAD_REPORT' | translate }}
+          </span>
+          <span>
+            (max: {{ maxFileSize | filesize }})
+          </span>
+        </ng-template>
+        <ng-template [ngIf]="!file && student?.reportFileName">
+          <div class="doc">
+            <img class="icon" src="assets/images/decorative-icons/icons-doc.svg" alt="Document">
+            <span>{{ 'STUDENTS.UPLOADED_REPORT' | translate }}</span>
+          </div>
+        </ng-template>
+        <ng-template [ngIf]="file">
+          <div class="doc">
+            <img class="icon" src="assets/images/decorative-icons/icons-doc.svg" alt="Document">
+            <span>{{ file.name }}</span>
+            <span class="size">{{ file.size | filesize }}</span>
+          </div>
+        </ng-template>
+
+      </label>
+      <button *ngIf="file && !fileIsSent" mat-button class="main-btn-primary upload-btn" (click)="sendFile()">
+        Завантажити
+      </button>
+      <div *ngIf="fileIsSent" class="success-notification">
+        <span>
+          Завантажено
+        </span>
+      </div>
+    </div>
+  </section>
+</ng-template>

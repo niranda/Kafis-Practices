@@ -1,0 +1,26 @@
+<div class="wrapper">
+  <div class="info">
+    <div>{{ 'STUDENTS.FULLNAME' | translate }}:</div>
+    <div>{{ student.fullName }}</div>
+    <div>{{ 'STUDENTS.YEAR' | translate }}:</div>
+    <div>{{ student.year }}</div>
+    <div>{{ 'STUDENTS.GRADE_LEVEL' | translate }}:</div>
+    <div>{{ studentGradeLevels[student.gradeLevel] }}</div>
+    <div>{{ 'STUDENTS.SPECIALTY' | translate }}:</div>
+    <div>{{ student.specialty }}</div>
+    <div>{{ 'STUDENTS.GROUP_CODE' | translate }}:</div>
+    <div>{{ student.groupCode }}</div>
+    <div>{{ 'STUDENTS.ORGANIZATION' | translate }}:</div>
+    <div [class.hidden-value]="student.organization == null">{{ student.organization?.name }}</div>
+    <div>{{ 'STUDENTS.GRADE' | translate }}:</div>
+    <div [class.hidden-value]="student.grade == null">{{ student.grade }}</div>
+  </div>
+</div>
+<div class="controlls">
+  <button mat-mini-fab class="btn-edit" (click)="editStudentGrade()">
+    <img src="assets/images/control-icons/icons-edit.svg" />
+  </button>
+  <button *ngIf="student?.reportFileName" mat-mini-fab class="btn-download" (click)="downloadStudentReportFile(student.reportFileName)">
+    <img src="assets/images/control-icons/icons-download-doc.svg" alt="download">
+  </button>
+</div>

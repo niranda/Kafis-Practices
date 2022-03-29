@@ -1,0 +1,44 @@
+table {
+  width: 100%;
+  font-family: 'Montserrat';
+  font-weight: 500;
+}
+
+mat-spinner {
+  margin: 10% auto 0;
+}
+
+.mat-column-fullName {
+  flex: 0 0 40% !important;
+  width: 40% !important;
+}
+
+.mat-column-userRole {
+  flex: 0 0 13% !important;
+  width: 13% !important;
+}
+
+.mat-column-userName {
+  flex: 0 0 24% !important;
+  width: 24% !important;
+}
+
+.mat-column-password {
+  flex: 0 0 23% !important;
+  width: 23% !important;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+tr.mat-header-row {
+  user-select: none;
+}
+
+
+.details-container {
+  overflow: hidden;
+  display: flex;
+}
