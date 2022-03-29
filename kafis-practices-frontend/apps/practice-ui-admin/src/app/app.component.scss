@@ -1,0 +1,64 @@
+@import 'variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+practice-header {
+  padding: 0 30px 0 40px;
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-right: 60px;
+    a {
+      margin-left: 1.5em;
+    }
+  }
+
+  a {
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+.router-wrapper {
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.active-link {
+  text-decoration: underline 2px !important;
+}
+
+@media (max-width: 1100px) {
+  practice-header {
+    padding: 0 20px;
+    .nav-links {
+      width: auto;
+      margin-right: 0;
+      row-gap: 10px;
+      a {
+        font-size: 16px;
+        margin-left: 0;
+        margin-right: 1.5em;
+      }
+    }
+    .logout-desk {
+      margin-left: auto;
+    }
+  }
+}
+
+@media (max-width: 412px) {
+  practice-header {
+    .nav-links {
+      row-gap: 5px;
+    }
+  }
+}

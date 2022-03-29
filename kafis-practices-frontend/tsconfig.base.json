@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@practice/environment": ["libs/environment/src/index.ts"],
+      "@practice/feature-login": ["libs/feature-login/src/index.ts"],
+      "@practice/enums": ["libs/enums/src/index.ts"],
+      "@practice/ui/components/ui-elements": [
+        "libs/ui/components/ui-elements/src/index.ts"
+      ],
+      "@practice/ui/styles": ["libs/ui/styles/src/index.ts"],
+      "@practice/ui/components/header": [
+        "libs/ui/components/header/src/index.ts"
+      ],
+      "@practice/ui/components/dialogs": [
+        "libs/ui/components/dialogs/src/index.ts"
+      ],
+      "@practice/ui/components/tables": [
+        "libs/ui/components/tables/src/index.ts"
+      ],
+      "@practice/common": ["libs/common/src/index.ts"],
+      "@practice/interfaces": ["libs/interfaces/src/index.ts"],
+      "@practice/utils": ["libs/utils/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

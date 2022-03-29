@@ -1,0 +1,27 @@
+<form class="form" [formGroup]="form">
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'SETTINGS.DOCUMENT_DIALOGS.DEGREE_LEVEL' | translate }}</mat-label>
+    <mat-select formControlName="degreeLevel" name="degreeLevel">
+      <mat-option *ngFor="let level of degreeLevels" [value]="level[1]">
+        {{ ('STUDENTS.' + level[0]) | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'SETTINGS.DOCUMENT_DIALOGS.SPECIALTY' | translate }}</mat-label>
+    <mat-select formControlName="specialty" name="specialty" [disabled]="!(specialties && specialties.length)">
+      <mat-option *ngFor="let spec of specialties" [value]="spec">
+        {{ spec }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <span class="spec-error" *ngIf="specialties && !specialties.length">{{ "STUDENTS.SPECIALTY_NOTFOUND_ORDER" | translate }}</span>
+  <div class="button-wrapper">
+    <button mat-button mat-dialog-close class="main-btn">
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+    <button matRipple class="main-btn-primary submit" (click)="submit()" [disabled]="!form.valid">
+      {{ 'SETTINGS.DOCUMENT_DIALOGS.DOWNLOAD_ORDER' | translate }}
+    </button>
+  </div>
+</form>

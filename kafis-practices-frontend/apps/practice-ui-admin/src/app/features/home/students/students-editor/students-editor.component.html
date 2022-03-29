@@ -1,0 +1,111 @@
+<mat-spinner color="accent" diameter="160" *ngIf="!organizations; else content"></mat-spinner>
+<ng-template #content>
+  <form class="form animated-appearance" [formGroup]="studentFormGroup" autocomplete="off" (ngSubmit)="onSubmit()">
+    <div class="data">
+      <div class="formGroup">
+        <div class="double-input">
+          <practice-input class="fullName-input" [id]="'fullName'" [type]="'text'"
+            [placeholder]="'STUDENTS.FULLNAME_PLACEHOLDER' | translate" formControlName="fullName"
+            [error]="isInvalid('fullName')" [hasOnInputEvent]="true" [src]="" alt=""
+            [labelText]="'STUDENTS.FULLNAME' | translate"></practice-input>
+          <div class="year-formGroup">
+            <label class="input-label" for="year">{{ 'STUDENTS.YEAR' | translate }}</label>
+            <mat-form-field appearance="outline" class="year-select">
+              <mat-select formControlName="year" name="year">
+                <mat-option *ngFor="let year of [2,4]" [value]="year">
+                  {{ year }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <label class="errors-label"
+          *ngIf="studentFormGroup.get('fullName').touched && studentFormGroup.get('fullName').errors?.required">{{'FORMS_VALIDATION.REQUIRED'
+          | translate }}</label>
+        <label class="errors-label"
+          *ngIf="studentFormGroup.get('year').touched && studentFormGroup.get('year').errors?.required">{{'FORMS_VALIDATION.REQUIRED'
+          | translate }}</label>
+      </div>
+      <div class="formGroup">
+        <label class="input-label" for="gradeLevel">{{ 'STUDENTS.GRADE_LEVEL' | translate }}</label>
+        <mat-form-field appearance="outline" class="gradeLevel-select">
+          <mat-select formControlName="gradeLevel" name="gradeLevel">
+            <mat-option *ngFor="let gradeLevel of getGradeLevels()" [value]="gradeLevel">
+              {{studentGradeLevels[gradeLevel]}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <label class="errors-label"
+          *ngIf="studentFormGroup.get('gradeLevel').touched && studentFormGroup.get('gradeLevel').errors?.required">{{'FORMS_VALIDATION.REQUIRED'
+          | translate }}</label>
+      </div>
+      <div class="formGroup">
+        <practice-input class="specialization-input" [id]="'specialization'" [type]="'text'"
+          [placeholder]="'STUDENTS.SPECIALIZATION_PLACEHOLDER' | translate" formControlName="specialization"
+          [error]="isInvalid('specialization')" [hasOnInputEvent]="true" [src]="" alt=""
+          [labelText]="'STUDENTS.SPECIALIZATION' | translate"></practice-input>
+        <label class="errors-label"
+          *ngIf="studentFormGroup.get('specialization').touched && studentFormGroup.get('specialization').errors?.required">{{'FORMS_VALIDATION.REQUIRED'
+          | translate }}</label>
+      </div>
+      <div class="formGroup">
+        <practice-input class="specialty-input" [id]="'specialty'" [type]="'text'"
+          [placeholder]="'STUDENTS.SPECIALTY_PLACEHOLDER' | translate" formControlName="specialty"
+          [error]="isInvalid('specialty')" [hasOnInputEvent]="true" [src]="" alt=""
+          [labelText]="'STUDENTS.SPECIALTY' | translate"></practice-input>
+        <label class="errors-label"
+          *ngIf="studentFormGroup.get('specialty').touched && studentFormGroup.get('specialty').errors?.required">{{'FORMS_VALIDATION.REQUIRED'
+          | translate }}</label>
+      </div>
+      <div class="formGroup">
+        <div class="double-input">
+          <practice-input class="groupCode-input" [id]="'groupCode'" [type]="'text'"
+            [placeholder]="'STUDENTS.GROUP_CODE_PLACEHOLDER' | translate" formControlName="groupCode"
+            [error]="isInvalid('groupCode')" [hasOnInputEvent]="true" [src]="" alt=""
+            [labelText]="'STUDENTS.GROUP_CODE' | translate"></practice-input>
+          <practice-input class="grade-input" [id]="'grade'" [type]="'number'" [placeholder]="'**'"
+            formControlName="grade" [error]="isInvalid('grade')" [hasOnChangeEvent]="true" [src]="" alt=""
+            [labelText]="'STUDENTS.GRADE' | translate"></practice-input>
+        </div>
+        <label class="errors-label"
+          *ngIf="studentFormGroup.get('groupCode').touched && studentFormGroup.get('groupCode').errors?.required">{{'FORMS_VALIDATION.REQUIRED'
+          | translate }}</label>
+        <label class="errors-label" *ngIf="studentFormGroup.get('grade').touched && studentFormGroup.get('grade').errors?.min ||
+        studentFormGroup.get('grade').errors?.max">{{ 'FORMS_VALIDATION.GRADE_LENGTH' | translate }}</label>
+        <label class="errors-label"
+          *ngIf="studentFormGroup.get('grade').touched && studentFormGroup.get('grade').errors?.invalidType">{{
+          'FORMS_VALIDATION.MUST_BE_INTEGER' | translate }}</label>
+      </div>
+
+      <mat-form-field appearance="fill">
+        <mat-label [class.hide-ph]="studentFormGroup.get('teacher').value">{{ 'STUDENTS.TEACHER_PLACEHOLDER' | translate
+          }}</mat-label>
+        <mat-select formControlName="teacher" name="teacher" [compareWith]="compareCategoryObjects">
+          <mat-option></mat-option>
+          <mat-option *ngFor="let teacher of teachers" [value]="teacher">
+            {{teacher.fullName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label [class.hide-ph]="studentFormGroup.get('organization').value">{{ 'STUDENTS.ORGANIZATION_PLACEHOLDER' |
+          translate }}</mat-label>
+        <mat-select formControlName="organization" name="organization" [compareWith]="compareCategoryObjects">
+          <mat-option></mat-option>
+          <mat-option *ngFor="let organization of organizations" [value]="organization">
+            {{organization.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button mat-button class="main-btn cancel-btn" type="reset" routerLink="..">{{ 'COMMON.CANCEL' | translate
+          }}</button>
+        <button mat-button class="main-btn-primary add-btn" type="submit" [disabled]="!studentFormGroup.valid">
+          <span *ngIf="!student">{{ 'STUDENTS.ADD_STUDENT' | translate }}</span>
+          <span *ngIf="student">{{ 'COMMON.SAVE' | translate }}</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

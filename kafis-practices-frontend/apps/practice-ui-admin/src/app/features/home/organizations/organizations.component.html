@@ -1,0 +1,4 @@
+<div class="button-wrapper">
+  <button mat-button class="main-btn-primary" (click)="createOrganization()"> {{ 'ORGANIZATIONS.ADD_ORGANIZATION' | translate }}</button>
+</div>
+<practice-organizations-table [addedOrganization]="newOrganization"></practice-organizations-table>

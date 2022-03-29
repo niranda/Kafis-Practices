@@ -1,0 +1,26 @@
+@import "variables";
+
+.label {
+  font-size: 14px;
+  color: white;
+  border-top: 3px solid $header-bgr-color;
+  transition: 1s;
+  width: 100%;
+  text-align: center;
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4));
+  span {
+    height: 1.6em;
+    width: max-content;
+    padding: 4px 2em;
+    padding-bottom: 0.1em;
+    background-color: $header-bgr-color;
+    border-bottom-left-radius: 33px;
+    border-bottom-right-radius: 33px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+  }
+}
+
+mat-spinner {
+  margin: 10% auto 0;
+}

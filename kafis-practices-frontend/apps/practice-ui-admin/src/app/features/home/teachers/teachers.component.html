@@ -1,0 +1,11 @@
+<mat-spinner color="accent" diameter="160" *ngIf="!teachers; else content"></mat-spinner>
+<ng-template #content>
+  <div class="header animated-appearance">
+    <div class="button-wrapper">
+      <button mat-button class="main-btn-primary" (click)="createTeacher()"> {{ 'TEACHERS.ADD_TEACHER' | translate }}</button>
+    </div>
+  </div>
+  <div class="wrapper animated-appearance">
+    <practice-teacher-item *ngFor="let teacher of teachers; index as i" [teacher]="teacher" (deleteEmitter)="onTeacherDelete($event)"></practice-teacher-item>
+  </div>
+</ng-template>

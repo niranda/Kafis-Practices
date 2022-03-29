@@ -1,0 +1,19 @@
+<h1 class="title" mat-dialog-title>{{'STUDENTS.EDIT_STUDENT_GRADE' | translate}}</h1>
+<div class="description">
+  <form class="form" [formGroup]="studentFormGroup" autocomplete="off" (ngSubmit)="onSubmit()">
+      <div class="data">
+        <div class="formGroup">
+          <practice-input class="grade-input" [id]="'grade'" [type]="'number'" [placeholder]="'**'" formControlName="grade"
+          [error]="isInvalid('grade')" [hasOnChangeEvent]="true" [src]="" alt=""
+          [labelText]="'STUDENTS.GRADE' | translate"></practice-input>
+          <label class="errors-label" *ngIf="studentFormGroup.get('grade').touched && studentFormGroup.get('grade').errors?.min ||
+            studentFormGroup.get('grade').errors?.max">{{ 'FORMS_VALIDATION.GRADE_LENGTH' | translate }}</label>
+          <label class="errors-label" *ngIf="studentFormGroup.get('grade').touched && studentFormGroup.get('grade').errors?.invalidType">{{ 'FORMS_VALIDATION.MUST_BE_INTEGER' | translate }}</label>
+        </div>
+      </div>
+    <div class="button-container" mat-dialog-actions>
+      <button mat-button mat-dialog-close class="main-btn-primary add-btn" type="submit" [disabled]="!studentFormGroup.valid">{{ 'COMMON.SAVE' | translate }}</button>
+      <button mat-button mat-dialog-close class="main-btn cancel-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+    </div>
+  </form>
+</div>

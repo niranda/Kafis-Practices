@@ -1,0 +1,82 @@
+.article-button-container {
+  width: min-content;
+  display: flex;
+  justify-content: flex-end;
+  margin: auto 0 20px auto;
+  padding-right: 10px;
+  button {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+mat-spinner {
+  margin: 10% auto 0;
+}
+
+table {
+  width: 100%;
+  font-family: 'Montserrat';
+  font-weight: 500;
+}
+
+.mat-column-fullName {
+  flex: 0 0 25% !important;
+  width: 25% !important;
+}
+
+.mat-column-year {
+  flex: 0 0 5% !important;
+  width: 5% !important;
+}
+
+.mat-column-teacher-fullName {
+  flex: 0 0 15% !important;
+  width: 15% !important;
+}
+
+.mat-column-organization-name {
+  flex: 0 0 30% !important;
+  width: 30% !important;
+}
+
+.mat-column-grade {
+  flex: 0 0 5% !important;
+  width: 5% !important;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+tr.mat-header-row {
+  user-select: none;
+}
+
+tr.details-row {
+  height: 0;
+  background: #efefef;
+}
+
+tr.table-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.table-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.expanded-row {
+  background: #efefef;
+}
+
+.table-row td {
+  border-bottom-width: 0;
+}
+
+.details-container {
+  overflow: hidden;
+  display: flex;
+}

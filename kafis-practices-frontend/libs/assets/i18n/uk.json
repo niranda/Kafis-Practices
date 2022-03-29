@@ -1,0 +1,151 @@
+{
+  "COMMON": {
+    "CANCEL": "Відмінити",
+    "SAVE": "Зберегти"
+  },
+  "NOTIFICATIONS": {
+    "AUTHENTICATION_FAILED": "Вхід не виконано",
+    "AUTHENTICATION_SUCCESS": "Аутентифікація успішна",
+    "LOGOUT_SUCCESS": "Вихід виконано успішно",
+    "LOGGED_IN": "Ви увійшли!",
+    "LOGGED_OUT": "Ви вийшли!",
+    "UNAUTHORIZED": "У вас недостатньо прав для виконання цієї дії!",
+    "CREATE_SUCCESS": "Створення успішне",
+    "CREATE_FAILED": "Створення не здійснено",
+    "UPDATE_SUCCESS": "Дані оновлено успішно",
+    "UPDATE_FAILED": "Дані не оновлені",
+    "DELETE_SUCCESS": "Видалення успішне",
+    "DELETE_FAILED": "Видалення не відбулось",
+    "STUDENTS_OVERLOAD": "Цьому керівнику вже призначено 8 студентів!",
+    "MAX_FILESIZE": "Максимальний розмір файлу для завантаження - 10 МБ",
+    "ERROR": "Сталася помилка",
+    "WRONG_FORMAT": "Неправильний формат файлу"
+  },
+  "ERROR_MESSAGES": {
+    "INVALID_LOGIN": "Це ім'я користувача не зареєстроване",
+    "INVALID_PASSWORD": "Неправильний пароль"
+  },
+  "DIALOG": {
+    "LOGOUT_HEADER": "Підтвердження виходу",
+    "LOGOUT_CONTENT": "Ви впевнені, що хочете вийти з аккаунту?",
+    "DELETE_STUDENT_HEADER": "Видалення студента",
+    "DELETE_STUDENT_CONTENT": "Ви впевнені, що хочете видалити цього студента/цю студентку?",
+    "DELETE_ORGANIZATION_HEADER": "Видалення бази практики",
+    "DELETE_ORGANIZATION_CONTENT": "Ви впевнені, що хочете видалити цю базу практики?",
+    "DELETE_TEACHER_HEADER": "Видалення керівника",
+    "DELETE_TEACHER_CONTENT": "Ви впевнені, що хочете видалити цього керівника?",
+    "DELETE_DATABASE_HEADER": "Очищення бази данних",
+    "DELETE_DATABASE_CONTENT": "Ви впевнені, що хочете видалити з бази данних всі бази практики та всіх студентів?",
+    "LOGOUT": "Вихід",
+    "DELETE": "Видалити",
+    "CLOSE": "Закрити"
+  },
+  "FORMS_VALIDATION": {
+    "REQUIRED": "Це поле - обов'язкове!",
+    "YEAR_LENGTH": "Номер курсу повинен бути від 2 до 6!",
+    "GRADE_LENGTH": "Оцінка повинна бути від 0 до 100!",
+    "MUST_BE_INTEGER": "Значення повинно бути цілим числом!"
+  },
+  "TABLES": {
+    "FILTER": "Пошук",
+    "STUDENTS_NOT_FOUND": "Студентів не знайдено за пошуком",
+    "ORGANIZATIONS_NOT_FOUND": "Бази практики не знайдено за пошуком",
+    "USERS_NOT_FOUND": "Користувачів не знайдено за пошуком"
+  },
+  "HEADER": {
+    "LOGOUT": "Вихід",
+    "STUDENTS": "Студенти",
+    "TEACHERS": "Керівники",
+    "ORGANIZATIONS": "Бази практики",
+    "USERS": "Користувачі",
+    "SETTINGS": "Налаштування"
+  },
+  "AUTH": {
+    "LOGIN": "Вхід",
+    "USERNAME": "Ім'я користувача",
+    "PASSWORD": "Пароль",
+    "USERNAME_INPUT": "Уведіть ваш логін",
+    "LOG_IN": "Увійти"
+  },
+  "STUDENTS": {
+    "FULLNAME": "ПІБ",
+    "FULLNAME_PLACEHOLDER": "Уведіть ПІБ студента",
+    "GRADE": "Оцінка",
+    "YEAR": "Курс",
+    "GRADE_LEVEL": "Рівень навчання",
+    "GRADE_LEVEL_PLACEHOLDER": "Оберіть рівень навчання",
+    "SPECIALTY": "Спеціальність",
+    "SPECIALTY_PLACEHOLDER": "Уведіть спеціальність студента",
+    "SPECIALIZATION": "Спеціалізація",
+    "SPECIALIZATION_PLACEHOLDER": "Уведіть спеціалізацію студента",
+    "GROUP_CODE": "Шифр групи",
+    "GROUP_CODE_PLACEHOLDER": "Уведіть шифр групи студента",
+    "TEACHER": "Керівник",
+    "TEACHER_PLACEHOLDER": "Оберіть керівника",
+    "ORGANIZATION": "База практики",
+    "ORGANIZATION_PLACEHOLDER": "Оберіть базу практики",
+    "ADD_STUDENT": "Додати студента",
+    "FIRST_FULL_GRADE": "перший (бакалаврський)",
+    "FIRST_REDUCED_GRADE": "перший (скорочений термін навчання) (бакалаврський)",
+    "SECOND_GRADE": "другий (магістерський)",
+    "BACHELOR": "Бакалавр",
+    "MASTER": "Магістр",
+    "LOAD_DIARY": "Завантажити щоденник",
+    "LOAD_CONTRACT": "Завантажити договір",
+    "UPLOAD_REPORT": "Завантажити звіт",
+    "UPLOADED_REPORT": "Звіт завантажено. Ви можете його замінити натиснувши сюди",
+    "FROM_UNIVERSITY": "від університету",
+    "EDIT_STUDENT_GRADE": "Оцінка студента",
+    "DATES": "Дати практики",
+    "SPECIALTY_NOTFOUND_REPORT": "Спеціальності за обраними курсом та рівнем навчання не знайдено",
+    "SPECIALTY_NOTFOUND_ORDER": "Спеціальності за обраним рівнем навчання не знайдено"
+  },
+  "ORGANIZATIONS": {
+    "NAME": "Назва",
+    "CITY": "Місто",
+    "NAME_PLACEHOLDER": "Уведіть назву бази практики",
+    "CITY_PLACEHOLDER": "Уведіть місто/село/пгт бази практики",
+    "ADD_ORGANIZATION": "Додати базу практики",
+    "EDIT_ORGANIZATION": "Змінити базу практики",
+    "STUDENTS": "Студенти, закріплені за цією базою практики"
+  },
+  "TEACHERS": {
+    "FULLNAME": "ПІБ",
+    "FULLNAME_PLACEHOLDER": "Уведіть ПІБ керівника",
+    "POSITION": "Посада",
+    "POSITION_PLACEHOLDER": "Уведіть посаду керівника",
+    "ADD_TEACHER": "Додати керівника",
+    "EDIT_TEACHER": "Змінити керівника",
+    "STUDENTS": "Студенти, призначені цьому керівнику"
+  },
+  "USERS": {
+    "ROLE": "Тип",
+    "USERNAME": "Ім'я користувача",
+    "PASSWORD": "Пароль"
+  },
+  "SETTINGS": {
+    "ATTORNEY": "Довіреність",
+    "FIRST_FULL_GRADE": "Перший (бакалаврський)",
+    "FIRST_REDUCED_GRADE": "Перший (бакалаврський скорочений)",
+    "SECOND_GRADE": "Другий (магістерський)",
+    "SELECT_DATE_RANGE": "Оберіть діапазон дат",
+    "FROM_DATE": "Початок",
+    "TO_DATE": "Кінець",
+    "DOWNLOAD_DOCS": "Документи",
+    "REPORT": "Звіт",
+    "ORDER": "Наказ",
+    "OTHER": "Інше",
+    "DATE_SETTINGS": "Дати практики",
+    "CLEARDB": "Натиснувши цю кнопку ви можете видалити всі бази практики та студентів з бази данних",
+    "CLEAR": "Очистити",
+    "DOCUMENT_DIALOGS": {
+      "YEAR": "Курс",
+      "GRADE_LEVEL": "Рівень навчання",
+      "DEGREE_LEVEL": "Рівень навчання",
+      "SPECIALTY": "Спеціальність",
+      "DOWNLOAD_ORDER": "Завантажити наказ"
+    }
+  },
+  "Teacher" : "Викладач",
+  "Student" : "Студент"
+}

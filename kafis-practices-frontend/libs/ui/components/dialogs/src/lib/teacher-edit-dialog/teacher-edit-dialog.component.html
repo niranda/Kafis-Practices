@@ -1,0 +1,26 @@
+<h1 class="title" mat-dialog-title *ngIf="!teacher">{{'TEACHERS.ADD_TEACHER' | translate}}</h1>
+<h1 class="title" mat-dialog-title *ngIf="teacher">{{'TEACHERS.EDIT_TEACHER' | translate}}</h1>
+<div class="description">
+  <form class="form" [formGroup]="teacherFormGroup" autocomplete="off" (ngSubmit)="onSubmit()">
+      <div class="data">
+        <div class="formGroup">
+          <practice-input class="fullName-input" [id]="'fullName'" [type]="'text'" [placeholder]="'TEACHERS.FULLNAME_PLACEHOLDER' | translate"
+          formControlName="fullName" [error]="isInvalid('fullName')" [hasOnInputEvent]="true" [src]="" alt=""
+          [labelText]="'TEACHERS.FULLNAME' | translate"></practice-input>
+          <label class="errors-label"
+            *ngIf="teacherFormGroup.get('fullName').touched && teacherFormGroup.get('fullName').errors?.required">{{'FORMS_VALIDATION.REQUIRED' | translate }}</label>
+        </div>
+        <div class="formGroup">
+          <practice-input class="position-input" [id]="'position'" [type]="'text'" [placeholder]="'TEACHERS.POSITION_PLACEHOLDER' | translate"
+          formControlName="position" [error]="isInvalid('position')" [hasOnInputEvent]="true" [src]="" alt=""
+          [labelText]="'TEACHERS.POSITION' | translate"></practice-input>
+          <label class="errors-label"
+            *ngIf="teacherFormGroup.get('position').touched && teacherFormGroup.get('position').errors?.required">{{'FORMS_VALIDATION.REQUIRED' | translate }}</label>
+        </div>
+      </div>
+    <div class="button-container" mat-dialog-actions>
+      <button mat-button mat-dialog-close class="main-btn-primary add-btn" type="submit" [disabled]="!teacherFormGroup.valid">{{ 'COMMON.SAVE' | translate }}</button>
+      <button mat-button mat-dialog-close class="main-btn cancel-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+    </div>
+  </form>
+</div>

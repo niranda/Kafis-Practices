@@ -1,0 +1,28 @@
+@import "variables";
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: 'Montserrat';
+  .spec-error {
+    color: $attention-color;
+    margin-bottom: 10px;
+  }
+  .button-wrapper {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    .submit {
+      outline: none;
+    }
+  }
+}
+
+.mat-form-field {
+  font-family: 'Montserrat' !important;
+  font-weight: 500 !important;
+}

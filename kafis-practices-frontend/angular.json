@@ -1,0 +1,581 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "practice-ui",
+  "projects": {
+    "practice-ui": {
+      "projectType": "application",
+      "root": "apps/practice-ui",
+      "sourceRoot": "apps/practice-ui/src",
+      "prefix": "practice",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/practice-ui",
+            "index": "apps/practice-ui/src/index.html",
+            "main": "apps/practice-ui/src/main.ts",
+            "polyfills": "apps/practice-ui/src/polyfills.ts",
+            "tsConfig": "apps/practice-ui/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/practice-ui/src/assets",
+              {
+                "glob": "favicon.ico",
+                "input": "libs/assets",
+                "output": "./"
+              },
+              {
+                "input": "libs/assets/i18n",
+                "glob": "*.json",
+                "output": "assets/i18n"
+              },
+              {
+                "input": "libs/assets/images",
+                "glob": "**/*",
+                "output": "assets/images"
+              }
+            ],
+            "styles": [
+              "libs/ui/styles/src/lib/custom-theme.scss",
+              "apps/practice-ui/src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/src/lib/"]
+            },
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "libs/environment/src/lib/environment.ts",
+                  "with": "libs/environment/src/lib/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "practice-ui:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "practice-ui:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "practice-ui:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/practice-ui/src/**/*.ts",
+              "apps/practice-ui/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/practice-ui"],
+          "options": {
+            "jestConfig": "apps/practice-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "practice-ui-e2e": {
+      "root": "apps/practice-ui-e2e",
+      "sourceRoot": "apps/practice-ui-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/practice-ui-e2e/cypress.json",
+            "tsConfig": "apps/practice-ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "practice-ui:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "practice-ui:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/practice-ui-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "practice-ui-admin": {
+      "projectType": "application",
+      "root": "apps/practice-ui-admin",
+      "sourceRoot": "apps/practice-ui-admin/src",
+      "prefix": "practice",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/practice-ui-admin",
+            "index": "apps/practice-ui-admin/src/index.html",
+            "main": "apps/practice-ui-admin/src/main.ts",
+            "polyfills": "apps/practice-ui-admin/src/polyfills.ts",
+            "tsConfig": "apps/practice-ui-admin/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/practice-ui-admin/src/assets",
+              {
+                "glob": "favicon.ico",
+                "input": "libs/assets",
+                "output": "./"
+              },
+              {
+                "input": "libs/assets/i18n",
+                "glob": "*.json",
+                "output": "assets/i18n"
+              },
+              {
+                "input": "libs/assets/images",
+                "glob": "**/*",
+                "output": "assets/images"
+              }
+            ],
+            "styles": [
+              "libs/ui/styles/src/lib/custom-theme.scss",
+              "apps/practice-ui-admin/src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/src/lib/"]
+            },
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "libs/environment/src/lib/environment.ts",
+                  "with": "libs/environment/src/lib/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "practice-ui-admin:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "practice-ui-admin:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "practice-ui-admin:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/practice-ui-admin/src/**/*.ts",
+              "apps/practice-ui-admin/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/practice-ui-admin"],
+          "options": {
+            "jestConfig": "apps/practice-ui-admin/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "practice-ui-admin-e2e": {
+      "root": "apps/practice-ui-admin-e2e",
+      "sourceRoot": "apps/practice-ui-admin-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/practice-ui-admin-e2e/cypress.json",
+            "tsConfig": "apps/practice-ui-admin-e2e/tsconfig.e2e.json",
+            "devServerTarget": "practice-ui-admin:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "practice-ui-admin:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/practice-ui-admin-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "environment": {
+      "projectType": "library",
+      "root": "libs/environment",
+      "sourceRoot": "libs/environment/src",
+      "prefix": "practice",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/environment/src/**/*.ts",
+              "libs/environment/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/environment"],
+          "options": {
+            "jestConfig": "libs/environment/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "feature-login": {
+      "projectType": "library",
+      "root": "libs/feature-login",
+      "sourceRoot": "libs/feature-login/src",
+      "prefix": "practice",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature-login/src/**/*.ts",
+              "libs/feature-login/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature-login"],
+          "options": {
+            "jestConfig": "libs/feature-login/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "enums": {
+      "projectType": "library",
+      "root": "libs/enums",
+      "sourceRoot": "libs/enums/src",
+      "prefix": "practice",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/enums/src/**/*.ts",
+              "libs/enums/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/enums"],
+          "options": {
+            "jestConfig": "libs/enums/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ui-components-ui-elements": {
+      "projectType": "library",
+      "root": "libs/ui/components/ui-elements",
+      "sourceRoot": "libs/ui/components/ui-elements/src",
+      "prefix": "practice",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/components/ui-elements/src/**/*.ts",
+              "libs/ui/components/ui-elements/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/components/ui-elements"],
+          "options": {
+            "jestConfig": "libs/ui/components/ui-elements/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ui-styles": {
+      "projectType": "library",
+      "root": "libs/ui/styles",
+      "sourceRoot": "libs/ui/styles/src",
+      "prefix": "practice",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/styles/src/**/*.ts",
+              "libs/ui/styles/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/styles"],
+          "options": {
+            "jestConfig": "libs/ui/styles/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ui-components-header": {
+      "projectType": "library",
+      "root": "libs/ui/components/header",
+      "sourceRoot": "libs/ui/components/header/src",
+      "prefix": "practice",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/components/header/src/**/*.ts",
+              "libs/ui/components/header/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/components/header"],
+          "options": {
+            "jestConfig": "libs/ui/components/header/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ui-components-dialogs": {
+      "projectType": "library",
+      "root": "libs/ui/components/dialogs",
+      "sourceRoot": "libs/ui/components/dialogs/src",
+      "prefix": "practice",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/components/dialogs/src/**/*.ts",
+              "libs/ui/components/dialogs/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/components/dialogs"],
+          "options": {
+            "jestConfig": "libs/ui/components/dialogs/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ui-components-tables": {
+      "projectType": "library",
+      "root": "libs/ui/components/tables",
+      "sourceRoot": "libs/ui/components/tables/src",
+      "prefix": "practice",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/components/tables/src/**/*.ts",
+              "libs/ui/components/tables/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/components/tables"],
+          "options": {
+            "jestConfig": "libs/ui/components/tables/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "common": {
+      "projectType": "library",
+      "root": "libs/common",
+      "sourceRoot": "libs/common/src",
+      "prefix": "practice",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/common/src/**/*.ts",
+              "libs/common/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/common"],
+          "options": {
+            "jestConfig": "libs/common/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "interfaces": {
+      "projectType": "library",
+      "root": "libs/interfaces",
+      "sourceRoot": "libs/interfaces/src",
+      "prefix": "practice",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/interfaces/src/**/*.ts",
+              "libs/interfaces/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/interfaces"],
+          "options": {
+            "jestConfig": "libs/interfaces/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "utils": {
+      "projectType": "library",
+      "root": "libs/utils",
+      "sourceRoot": "libs/utils/src",
+      "prefix": "practice",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/utils/src/**/*.ts",
+              "libs/utils/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/utils"],
+          "options": {
+            "jestConfig": "libs/utils/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  }
+}

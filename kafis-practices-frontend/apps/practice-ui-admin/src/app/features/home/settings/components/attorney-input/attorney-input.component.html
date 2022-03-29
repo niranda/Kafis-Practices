@@ -1,0 +1,13 @@
+<mat-spinner color="accent" diameter="160" *ngIf="!attorney; else content"></mat-spinner>
+<ng-template #content>
+  <mat-form-field class="attorney-input" [formGroup]="attorney">
+    <mat-label>{{ 'SETTINGS.ATTORNEY' | translate }}</mat-label>
+    <input matInput placeholder="Приклад: №21/86-02-09 від 04.01.2021 р." #input formControlName="value">
+  </mat-form-field>
+  <button mat-mini-fab class="round-btn btn-cancel" (click)="clearAttorney()" [disabled]="!hasAttorneyChanged">
+    <img src="assets/images/control-icons/icons-cancel.svg" />
+  </button>
+  <button mat-mini-fab class="round-btn btn-save" (click)="saveAttorney()" [disabled]="!hasAttorneyChanged">
+    <img src="assets/images/control-icons/icons-save.svg" />
+  </button>
+</ng-template>

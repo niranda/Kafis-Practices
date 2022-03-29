@@ -1,0 +1,9 @@
+<mat-spinner color="accent" diameter="160" *ngIf="!teacher; else content"></mat-spinner>
+<ng-template #content>
+  <div class="header animated-appearance">
+    {{ teacher.fullName }}
+  </div>
+  <div class="wrapper animated-appearance">
+    <practice-student-item *ngFor="let student of teacher?.students; index as i" [student]="student"></practice-student-item>
+  </div>
+</ng-template>

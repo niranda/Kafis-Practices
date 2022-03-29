@@ -1,0 +1,17 @@
+<practice-header>
+  <nav class="nav-links">
+    <ng-template [ngIf]="authService.isLoggedIn">
+      <a routerLink="students" routerLinkActive="active-link">{{ 'HEADER.STUDENTS' | translate }}</a>
+      <a routerLink="teachers" routerLinkActive="active-link">{{ 'HEADER.TEACHERS' | translate }}</a>
+      <a routerLink="organizations" routerLinkActive="active-link">{{ 'HEADER.ORGANIZATIONS' | translate }}</a>
+      <a routerLink="users" routerLinkActive="active-link">{{ 'HEADER.USERS' | translate }}</a>
+      <a routerLink="settings" routerLinkActive="active-link">{{ 'HEADER.SETTINGS' | translate }}</a>
+    </ng-template>
+  </nav>
+  <a class="logout-desk" (click)="onLogout()" *ngIf="authService.isLoggedIn">
+    {{ 'HEADER.LOGOUT' | translate }}
+  </a>
+</practice-header>
+<div class="router-wrapper" [@routingAnimation]="getAnimationData(routerOutlet)">
+  <router-outlet #routerOutlet="outlet"></router-outlet>
+</div>

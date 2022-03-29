@@ -1,0 +1,26 @@
+@import 'variables';
+
+:host {
+  position: relative;
+  display: flex;
+  width: 100%;
+  padding: 0 150px;
+  .router-wrapper {
+    width: 100%;
+    max-width: calc(100vw - 150px);
+    min-height: calc(100vh - 80px);
+  }
+
+  .active-link {
+    color: $primary-color !important;
+  }
+}
+
+@media (max-width: 900px) {
+  :host {
+    padding: 0 50px;
+    .router-wrapper {
+      max-width: 100vw;
+    }
+  }
+}

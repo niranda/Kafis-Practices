@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 20px;
+  button {
+    padding: 0 60px;
+    width: min-content;
+    height: 50px;
+  }
+}

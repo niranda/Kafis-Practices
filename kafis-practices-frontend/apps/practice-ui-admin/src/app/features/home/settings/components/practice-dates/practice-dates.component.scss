@@ -1,0 +1,53 @@
+@import "../../settings-common.scss";
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px 0 30px;
+  width: 100%;
+  .label {
+    margin-bottom: 10px;
+  }
+  .grade-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    border-left: 4px solid $primary-color;
+    border-right: 4px solid $primary-color;
+    padding-left: 20px;
+    .grade-level {
+      font-size: 18px;
+      margin-right: auto;
+    }
+    .data-range {
+      margin: 0 20px;
+    }
+  }
+  .save-btn {
+    width: min-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2em 0 6px;
+    font-size: 16px;
+    outline: none;
+    .icon {
+      height: 38px;
+      width: 38px;
+      margin: 6px 1em;
+    }
+    &:active {
+      .icon {
+        transform: scale(0.96);
+        transition: 30ms;
+      }
+    }
+    &:disabled {
+      pointer-events: none;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<form class="form" [formGroup]="form">
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'SETTINGS.DOCUMENT_DIALOGS.YEAR' | translate }}</mat-label>
+    <mat-select formControlName="year" name="year">
+      <mat-option *ngFor="let year of [2,4]" [value]="year">
+        {{ year }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'SETTINGS.DOCUMENT_DIALOGS.GRADE_LEVEL' | translate }}</mat-label>
+    <mat-select formControlName="gradeLevel" name="gradelevel">
+      <mat-option *ngFor="let level of gradeLevels; index as i" [value]="level[1]">
+        {{ ('STUDENTS.' + level[0]) | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'SETTINGS.DOCUMENT_DIALOGS.SPECIALTY' | translate }}</mat-label>
+    <mat-select class="spec-select" formControlName="specialty" name="specialty"
+      [disabled]="!(specialties && specialties.length)">
+      <mat-option *ngFor="let spec of specialties" [value]="spec">
+        {{ spec }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <span class="spec-error" *ngIf="specialties && !specialties.length">{{ "STUDENTS.SPECIALTY_NOTFOUND_REPORT" | translate }}</span>
+  <div class="button-wrapper">
+    <button mat-button mat-dialog-close class="main-btn">
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+    <button matRipple class="main-btn-primary submit" (click)="submit()" [disabled]="!form.valid">
+      {{ 'STUDENTS.UPLOAD_REPORT' | translate }}
+    </button>
+  </div>
+</form>

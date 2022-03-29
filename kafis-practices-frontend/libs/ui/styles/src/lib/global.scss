@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,900");
+@import "variables.scss";
+@import "elements.scss";
+
+@keyframes content-appearance {
+  from {
+    opacity: 0;
+  }
+}
+
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body{
+    min-height: 100vh;
+    margin: 0;
+    background-color: $bg-color;
+    overflow-x: hidden;
+}
+
+.animated-appearance {
+  animation-name: content-appearance;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}

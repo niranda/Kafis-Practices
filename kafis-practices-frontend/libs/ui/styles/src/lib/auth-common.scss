@@ -1,0 +1,32 @@
+@import "./variables.scss";
+
+:host {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-grow: 1;
+  font-family: "Montserrat";
+  justify-content: center;
+}
+h2 {
+  height: 44px;
+  font-weight: 600;
+  font-size: 36px;
+  letter-spacing: 1.2px;
+  text-align: center;
+  color: $text-color-primary;
+  margin-top: 0;
+}
+form {
+  width: 400px;
+  height: auto;
+}
+.form-group {
+  margin-bottom: 1.4rem;
+}
+
+@media (max-width: 600px) {
+  form {
+    width: 320px;
+  }
+}
