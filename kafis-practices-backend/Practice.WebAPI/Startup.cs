@@ -31,29 +31,29 @@ namespace Practice.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+            services.AddControllers();
+
             services.RegisterInjections();
             services.RegisterJwt(Configuration);
             services.RegisterFolders(Configuration);
             services.RegisterEncryption(Configuration);
             services.RegisterClientUrls(Configuration);
 
-            services.AddCors();
-            services.AddControllers();
+            services.AddDefaultIdentity<User>().AddRoles<Role>().AddEntityFrameworkStores<ApplicationContext>();
+
+            IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
+            {
+                opt.Password.RequireDigit = true;
+                opt.Password.RequiredLength = 8;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = true;
+                opt.Password.RequireLowercase = true;
+            });
 
             string mySqlConnectionStr = Configuration.GetConnectionString("LocalConnectionString");
             services.AddDbContext<ApplicationContext>(options =>
             options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
-
-            services.AddDefaultIdentity<User>().AddRoles<IdentityRole<Guid>>().AddEntityFrameworkStores<ApplicationContext>();
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 6;
-            });
 
             services.AddAutoMapper(typeof(MapperProfile).GetTypeInfo().Assembly);
 
@@ -85,6 +85,8 @@ namespace Practice.WebAPI
                     }}, new List<string>()}
                 });
             });
+
+            services.AddRouting(options => options.LowercaseUrls = true);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

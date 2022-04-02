@@ -11,10 +11,10 @@ namespace Practice.Infrastructure.Stores
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationContext context;
-        private readonly RoleManager<IdentityRole<Guid>> roleManager;
+        private readonly RoleManager<Role> roleManager;
 
         public UserRepository(ApplicationContext context,
-                              RoleManager<IdentityRole<Guid>> roleManager)
+                              RoleManager<Role> roleManager)
         {
             this.context = context;
             this.roleManager = roleManager;

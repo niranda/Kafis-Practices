@@ -1,23 +1,30 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Practice.Application.Settings;
 using Practice.Domain.Core.Entities;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Practice.Application.Services.Token
 {
     public class TokenService : ITokenService
     {
         private readonly JwtSettings _jwtSettings;
+        private readonly UserManager<User> _userManager;
 
-        public TokenService(JwtSettings jwtSettings)
+        public TokenService(JwtSettings jwtSettings, UserManager<User> userManager)
         {
             _jwtSettings = jwtSettings;
+            _userManager = userManager;
         }
-        public string GenerateJwtToken(User user)
+        public async Task<string> GenerateJwtToken(User user)
         {
+            if (user == null) { throw new ArgumentNullException(nameof(user)); }
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescription = new SecurityTokenDescriptor
