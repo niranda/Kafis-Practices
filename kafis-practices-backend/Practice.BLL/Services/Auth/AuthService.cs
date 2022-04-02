@@ -1,4 +1,5 @@
-﻿using Practice.Application.DTOs.Login;
+﻿using Microsoft.AspNetCore.Identity;
+using Practice.Application.DTOs.Login;
 using Practice.Application.Services.Encryption;
 using Practice.Application.Services.Token;
 using Practice.Application.Settings;
@@ -6,6 +7,7 @@ using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Stores.UserN;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace Practice.Application.Services.Auth
@@ -13,16 +15,16 @@ namespace Practice.Application.Services.Auth
     public class AuthService : IAuthService
     {
         private readonly ITokenService tokenService;
-        private readonly IUserRepository userRepository;
-        private readonly EncryptionSettings encryptionSettings;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AuthService(ITokenService tokenService,
-                           IUserRepository userRepository,
-                           EncryptionSettings encryptionSettings)
+        public AuthService(ITokenService tokenService, UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<Role> roleManager)
         {
             this.tokenService = tokenService;
-            this.userRepository = userRepository;
-            this.encryptionSettings = encryptionSettings;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         public async Task<AuthResultDTO> Login(AuthDTO model)
@@ -30,35 +32,29 @@ namespace Practice.Application.Services.Auth
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
 
-            var existingUser = await userRepository.FindByUserName(model.UserName);
+            var user = await _userManager.FindByNameAsync(model.UserName);
 
-            if (existingUser != null)
+            if (user != null)
             {
-                if (CheckPassword(existingUser, model.Password))
+                var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+
+                if (result.Succeeded)
                 {
                     return new AuthResultDTO
                     {
                         IsSuccess = true,
-                        Token = tokenService.GenerateJwtToken(existingUser),
+                        Token = await tokenService.GenerateJwtToken(user),
                         ErrorMessage = null
                     };
                 }
-
-                return new AuthResultDTO
-                {
-                    IsSuccess = false,
-                    ErrorMessage = ErrorCode.InvalidPassword
-                };
             }
 
             return new AuthResultDTO
             {
                 IsSuccess = false,
-                ErrorMessage = ErrorCode.InvalidLogin
+                ErrorMessage = ErrorCode.InvalidPassword
             };
         }
 
-        private bool CheckPassword(User user, string password) => EncryptionService.DecryptString(user.PasswordHash, encryptionSettings.Key) == password;
     }
-
 }

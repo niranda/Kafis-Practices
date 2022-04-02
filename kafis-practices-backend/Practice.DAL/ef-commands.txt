@@ -1,7 +1,7 @@
 ﻿
 PowerShell commands:
 
-Update-Database -Project "Practice.Infrastructure" -StartupProject "QuickOrder.API" -Verbose
-Add-Migration -Name <Name> -Project "QuickOrderPractice.Infrastructure" -StartupProject "Practice.WebAPI" -Verbose -o Migrations
+Update-Database -Project "Practice.Infrastructure" -StartupProject "Practice.WebAPI" -Verbose
+Add-Migration -Name <Name> -Project "Practice.Infrastructure" -StartupProject "Practice.WebAPI" -Verbose -o Migrations
 Script-Migration -Project "Practice.Infrastructure" -StartupProject "Practice.WebAPI" -Output <Name> -Verbose
 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Practice.Infrastructure.Context
 {
-    public class ApplicationContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>, IApplicationContext
+    public class ApplicationContext : IdentityDbContext<User, Role, Guid>, IApplicationContext
     {
         public ApplicationContext(DbContextOptions options) : base(options) { }
 

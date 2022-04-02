@@ -17,33 +17,6 @@ namespace Practice.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.5");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
@@ -147,7 +120,7 @@ namespace Practice.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Practice.DAL.Entities.Organization", b =>
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Organization", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -175,7 +148,7 @@ namespace Practice.Infrastructure.Migrations
                     b.ToTable("Organizations");
                 });
 
-            modelBuilder.Entity("Practice.DAL.Entities.PracticeDates", b =>
+            modelBuilder.Entity("Practice.Domain.Core.Entities.PracticeDates", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -204,7 +177,34 @@ namespace Practice.Infrastructure.Migrations
                     b.ToTable("PracticeDates");
                 });
 
-            modelBuilder.Entity("Practice.DAL.Entities.Student", b =>
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -272,7 +272,7 @@ namespace Practice.Infrastructure.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("Practice.DAL.Entities.Teacher", b =>
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Teacher", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -305,7 +305,7 @@ namespace Practice.Infrastructure.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("Practice.DAL.Entities.User", b =>
+            modelBuilder.Entity("Practice.Domain.Core.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -377,7 +377,7 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
+                    b.HasOne("Practice.Domain.Core.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -386,7 +386,7 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Practice.DAL.Entities.User", null)
+                    b.HasOne("Practice.Domain.Core.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -395,7 +395,7 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Practice.DAL.Entities.User", null)
+                    b.HasOne("Practice.Domain.Core.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -404,13 +404,13 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
+                    b.HasOne("Practice.Domain.Core.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Practice.DAL.Entities.User", null)
+                    b.HasOne("Practice.Domain.Core.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -419,28 +419,28 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Practice.DAL.Entities.User", null)
+                    b.HasOne("Practice.Domain.Core.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Practice.DAL.Entities.Student", b =>
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Student", b =>
                 {
-                    b.HasOne("Practice.DAL.Entities.Organization", "Organization")
+                    b.HasOne("Practice.Domain.Core.Entities.Organization", "Organization")
                         .WithMany("Students")
                         .HasForeignKey("OrganizationId");
 
-                    b.HasOne("Practice.DAL.Entities.PracticeDates", "PracticeDates")
+                    b.HasOne("Practice.Domain.Core.Entities.PracticeDates", "PracticeDates")
                         .WithMany()
                         .HasForeignKey("PracticeDatesId");
 
-                    b.HasOne("Practice.DAL.Entities.Teacher", "Teacher")
+                    b.HasOne("Practice.Domain.Core.Entities.Teacher", "Teacher")
                         .WithMany("Students")
                         .HasForeignKey("TeacherId");
 
-                    b.HasOne("Practice.DAL.Entities.User", "User")
+                    b.HasOne("Practice.Domain.Core.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -453,18 +453,18 @@ namespace Practice.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Practice.DAL.Entities.Teacher", b =>
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Teacher", b =>
                 {
-                    b.HasOne("Practice.DAL.Entities.User", "User")
+                    b.HasOne("Practice.Domain.Core.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Practice.DAL.Entities.User", b =>
+            modelBuilder.Entity("Practice.Domain.Core.Entities.User", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", "Role")
+                    b.HasOne("Practice.Domain.Core.Entities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -473,12 +473,12 @@ namespace Practice.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Practice.DAL.Entities.Organization", b =>
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Organization", b =>
                 {
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("Practice.DAL.Entities.Teacher", b =>
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Teacher", b =>
                 {
                     b.Navigation("Students");
                 });

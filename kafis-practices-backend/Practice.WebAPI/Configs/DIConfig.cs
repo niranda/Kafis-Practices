@@ -27,25 +27,25 @@ namespace Practice.WebAPI.Configs
         public static void RegisterInjections(this IServiceCollection services)
         {
             services.AddTransient<IApplicationContext, ApplicationContext>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IStudentService, StudentService>();
-            services.AddScoped<ITeacherService, TeacherService>();
-            services.AddScoped<IOrganizationService, OrganizationService>();
-            services.AddScoped<ITokenService, TokenService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IStudentService, StudentService>();
+            services.AddTransient<ITeacherService, TeacherService>();
+            services.AddTransient<IOrganizationService, OrganizationService>();
+            services.AddTransient<ITokenService, TokenService>();
             services.AddScoped<IFileUploadService, FileUploadService>();
-            services.AddScoped<IPracticeDatesService, PracticeDatesService>();
-            services.AddScoped<IDocumentService, DocumentService>();
-            services.AddScoped<ITimeService, TimeService>();
+            services.AddTransient<IPracticeDatesService, PracticeDatesService>();
+            services.AddTransient<IDocumentService, DocumentService>();
+            services.AddTransient<ITimeService, TimeService>();
 
 
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IStudentRepository, StudentRepository>();
-            services.AddScoped<ITeacherRepository, TeacherRepository>();
-            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-            services.AddScoped<IPracticeDatesRepository, PracticeDatesRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IStudentRepository, StudentRepository>();
+            services.AddTransient<ITeacherRepository, TeacherRepository>();
+            services.AddTransient<IOrganizationRepository, OrganizationRepository>();
+            services.AddTransient<IPracticeDatesRepository, PracticeDatesRepository>();
 
-            services.AddScoped<CustomExceptionFilterAttribute>();
+            services.AddTransient<CustomExceptionFilterAttribute>();
         }
     }
 }
