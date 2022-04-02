@@ -8,7 +8,7 @@ namespace Practice.Domain.Core.Entities
 {
     public class Teacher : BaseEntity
     {
-        public Guid? UserId { get; set; }
+        public Guid UserId { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string FullName { get; set; }

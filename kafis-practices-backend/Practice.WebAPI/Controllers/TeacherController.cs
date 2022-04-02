@@ -4,6 +4,7 @@ using Practice.Application.DTOs.User.Teacher;
 using Practice.Application.Services.TeacherN;
 using Practice.Domain.Core.Common.Constants;
 using Practice.WebAPI.Filters;
+using System;
 using System.Threading.Tasks;
 
 namespace Practice.WebAPI.Controllers
@@ -31,7 +32,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize]
         [HttpGet("{id}")]
         //GET: api/Teacher/{id}
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             return Ok(await teacherService.GetTeacherById(id));
         }
@@ -39,7 +40,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Teacher)]
         [HttpGet("ByUserId")]
         //GET: api/Teacher/ByUserId?{teacherId}
-        public async Task<IActionResult> GetTeacherByUserId([FromQuery] string userId)
+        public async Task<IActionResult> GetTeacherByUserId([FromQuery] Guid userId)
         {
             return Ok(await teacherService.GetTeacherByUserId(userId));
         }
@@ -71,7 +72,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpDelete("{id}")]
         //DELETE: api/Teacher/{id}
-        public async Task<IActionResult> DeleteTeacher([FromRoute] int id)
+        public async Task<IActionResult> DeleteTeacher([FromRoute] Guid id)
         {
             return Ok(await teacherService.DeleteTeacher(id));
         }

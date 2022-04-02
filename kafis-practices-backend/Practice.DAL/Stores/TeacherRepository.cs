@@ -17,7 +17,7 @@ namespace Practice.Infrastructure.Stores
             this.context = context;
         }
 
-        public async Task<Teacher> GetById(int id, bool asNoTracking = true)
+        public async Task<Teacher> GetById(Guid id, bool asNoTracking = true)
         {
             if (asNoTracking)
             {
@@ -26,12 +26,12 @@ namespace Practice.Infrastructure.Stores
             return await context.Teachers.Include(t => t.Students.Where(s => !s.IsDeleted)).SingleOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<Teacher> GetByUserId(string userId)
+        public async Task<Teacher> GetByUserId(Guid userId)
         {
             return await context.Teachers.AsNoTracking()
                 .Include(t => t.Students.Where(s => !s.IsDeleted))
                 .ThenInclude(s => s.Organization)
-                .Where(t => t.UserId == new Guid(userId))
+                .Where(t => t.UserId == userId)
                 .SingleOrDefaultAsync();
         }
 

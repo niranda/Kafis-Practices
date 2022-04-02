@@ -69,7 +69,7 @@ namespace Practice.Application.Services.StudentN
             };
         }
 
-        public async Task<StudentDTO> GetStudentById(int id)
+        public async Task<StudentDTO> GetStudentById(Guid id)
         {
             var student = await studentRepository.GetById(id);
 
@@ -79,7 +79,7 @@ namespace Practice.Application.Services.StudentN
             return mapper.Map<StudentDTO>(student);
         }
 
-        public async Task<StudentDTO> GetStudentByUserId(string userId)
+        public async Task<StudentDTO> GetStudentByUserId(Guid userId)
         {
             return mapper.Map<StudentDTO>(await studentRepository.GetByUserId(userId));
         }
@@ -104,7 +104,7 @@ namespace Practice.Application.Services.StudentN
             return await studentRepository.GetSpecialtiesByDegreeLevel(degreeLevel);
         }
 
-        public async Task<StudentDTO> UpdateStudentGrade(int id, int grade)
+        public async Task<StudentDTO> UpdateStudentGrade(Guid id, int grade)
         {
             if (grade < 0 || grade > 100)
                 throw new ArgumentOutOfRangeException(nameof(grade));
@@ -118,7 +118,7 @@ namespace Practice.Application.Services.StudentN
             return mapper.Map<StudentDTO>(await studentRepository.Update(student));
         }
 
-        public async Task<StudentDTO> UpdateStudentReport(int id, IFormFile fileUpload)
+        public async Task<StudentDTO> UpdateStudentReport(Guid id, IFormFile fileUpload)
         {
             var student = await studentRepository.GetById(id);
             if (student == null)
@@ -161,7 +161,7 @@ namespace Practice.Application.Services.StudentN
             };
         }
 
-        public async Task<bool> DeleteStudent(int id)
+        public async Task<bool> DeleteStudent(Guid id)
         {
             var studentToDelete = await studentRepository.GetById(id, false);
 

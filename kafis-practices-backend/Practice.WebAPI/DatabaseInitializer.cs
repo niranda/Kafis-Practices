@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Practice.Domain.Core.Common.Constants;
+using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Entities;
 using Practice.Infrastructure.Context;
 using System;
@@ -26,6 +27,7 @@ namespace Practice.WebAPI
                 dbCreator.Create();
                 context.Database.Migrate();
                 await AddInitialData(services);
+                context.SaveChanges();
             }
         }
 
@@ -36,14 +38,14 @@ namespace Practice.WebAPI
                 var userManager = services.GetRequiredService<UserManager<User>>();
                 var rolesManager = services.GetRequiredService<RoleManager<Role>>();
                 var context = services.GetRequiredService<ApplicationContext>();
-                await EnsureUserCreated(userManager, rolesManager);
+                await EnsureUserCreated(userManager, rolesManager, context);
             }
             catch (Exception)
             {
             }
         }
 
-        private static async Task EnsureUserCreated(UserManager<User> userManager, RoleManager<Role> roleManager)
+        private static async Task EnsureUserCreated(UserManager<User> userManager, RoleManager<Role> roleManager, ApplicationContext context)
         {
             string adminUserName = "BigDaddy";
             string adminPassword = "Aa123456";
@@ -95,6 +97,8 @@ namespace Practice.WebAPI
                 {
                     await userManager.AddToRoleAsync(superTeacher, RoleNameConstants.Teacher);
                 }
+
+                context.Teachers.Add(new Teacher { Id = Guid.NewGuid(), FullName = superTeacher.UserName, Position = "Mega", UserId = superTeacher.Id });
             }
 
             if (await userManager.FindByEmailAsync(studentUserName) == null)
@@ -109,6 +113,8 @@ namespace Practice.WebAPI
                 {
                     await userManager.AddToRoleAsync(superStudent, RoleNameConstants.Student);
                 }
+
+                context.Students.Add(new Student { Id = Guid.NewGuid(), FullName = superStudent.UserName, Year = DateTime.UtcNow.Year, GradeLevel = GradeLevelEnum.FirstFull, Specialty = "121", Specialization = "2", UserId = superStudent.Id });
             }
         }
     }

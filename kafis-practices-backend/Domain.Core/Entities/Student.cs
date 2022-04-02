@@ -60,10 +60,10 @@ namespace Practice.Domain.Core.Entities
         }
         public string ReportFileName { get; set; }
 
-        public int? TeacherId { get; set; }
-        public int? OrganizationId { get; set; }
-        public Guid? UserId { get; set; }
-        public int? PracticeDatesId { get; set; }
+        public Guid? TeacherId { get; set; }
+        public Guid? OrganizationId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid? PracticeDatesId { get; set; }
 
         public User User { get; set; }
         public Teacher Teacher { get; set; }

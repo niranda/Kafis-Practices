@@ -37,7 +37,7 @@ namespace Practice.Application.Services.TeacherN
             return mapper.Map<TeacherDTO>(await teacherRepository.Create(teacher));
         }
 
-        public async Task<TeacherDTO> GetTeacherById(int id)
+        public async Task<TeacherDTO> GetTeacherById(Guid id)
         {
             var teacher = await teacherRepository.GetById(id);
 
@@ -47,7 +47,7 @@ namespace Practice.Application.Services.TeacherN
             return mapper.Map<TeacherDTO>(teacher);
         }
 
-        public async Task<TeacherDTO> GetTeacherByUserId(string userId)
+        public async Task<TeacherDTO> GetTeacherByUserId(Guid userId)
         {
             return mapper.Map<TeacherDTO>(await teacherRepository.GetByUserId(userId));
         }
@@ -70,7 +70,7 @@ namespace Practice.Application.Services.TeacherN
             return mapper.Map<TeacherDTO>(await teacherRepository.Update(mapper.Map<Teacher>(teacherDTO)));
         }
 
-        public async Task<bool> DeleteTeacher(int id)
+        public async Task<bool> DeleteTeacher(Guid id)
         {
             var teacherToDelete = await teacherRepository.GetById(id, false);
 

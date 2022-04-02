@@ -49,10 +49,10 @@ namespace Practice.Application.DTOs.User.Student
         }
         public string ReportFileName { get; set; }
 
-        public int? TeacherId { get; set; }
-        public int? OrganizationId { get; set; }
+        public Guid? TeacherId { get; set; }
+        public Guid? OrganizationId { get; set; }
         public Guid? UserId { get; set; }
-        public int? PracticeDatesId { get; set; }
+        public Guid? PracticeDatesId { get; set; }
 
         public TeacherDTO Teacher { get; set; }
         public OrganizationDTO Organization { get; set; }

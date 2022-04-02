@@ -18,7 +18,7 @@ namespace Practice.Infrastructure.Stores
             this.context = context;
         }
 
-        public async Task<Student> GetById(int id, bool asNoTracking = true)
+        public async Task<Student> GetById(Guid id, bool asNoTracking = true)
         {
             if (asNoTracking)
             {
@@ -27,9 +27,9 @@ namespace Practice.Infrastructure.Stores
             return await context.Students.Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).SingleOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<Student> GetByUserId(string userId)
+        public async Task<Student> GetByUserId(Guid userId)
         {
-            return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).Where(s => s.UserId == new Guid(userId)).SingleOrDefaultAsync();
+            return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).Where(s => s.UserId == userId).SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Student>> GetAll()

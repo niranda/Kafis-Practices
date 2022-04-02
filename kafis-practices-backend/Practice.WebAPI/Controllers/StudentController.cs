@@ -7,6 +7,7 @@ using Practice.Domain.Core.Common.Constants;
 using Practice.Domain.Core.Common.Enums;
 using Practice.WebAPI.Filters;
 using Practice.WebAPI.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace Practice.WebAPI.Controllers
@@ -36,7 +37,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize]
         [HttpGet("{id}")]
         //GET: api/Student/{id}
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             return Ok(await studentService.GetStudentById(id));
         }
@@ -44,7 +45,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Student)]
         [HttpGet("ByUserId")]
         //GET: api/Student/ByUserId?{teacherId}
-        public async Task<IActionResult> GetStudentByUserId([FromQuery] string userId)
+        public async Task<IActionResult> GetStudentByUserId([FromQuery] Guid userId)
         {
             return Ok(await studentService.GetStudentByUserId(userId));
         }
@@ -84,7 +85,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Teacher)]
         [HttpGet("grade")]
         //GET: api/Student/grade
-        public async Task<IActionResult> UpdateStudentGrade([FromQuery] int studentId, [FromQuery] int grade)
+        public async Task<IActionResult> UpdateStudentGrade([FromQuery] Guid studentId, [FromQuery] int grade)
         {
             return Ok(await studentService.UpdateStudentGrade(studentId, grade));
         }
@@ -93,7 +94,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Student)]
         [HttpPost("report")]
         //POST: api/Student/report
-        public async Task<IActionResult> UpdateStudentReport([FromQuery] int id, [FromForm] FileUpload fileUpload)
+        public async Task<IActionResult> UpdateStudentReport([FromQuery] Guid id, [FromForm] FileUpload fileUpload)
         {
             return Ok(await studentService.UpdateStudentReport(id, fileUpload.File));
         }
@@ -109,7 +110,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpDelete("{id}")]
         //DELETE: api/Student/{id}
-        public async Task<IActionResult> DeleteStudent([FromRoute] int id)
+        public async Task<IActionResult> DeleteStudent([FromRoute] Guid id)
         {
             return Ok(await studentService.DeleteStudent(id));
         }

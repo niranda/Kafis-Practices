@@ -122,9 +122,9 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Practice.Domain.Core.Entities.Organization", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -150,9 +150,9 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Practice.Domain.Core.Entities.PracticeDates", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
@@ -206,9 +206,9 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Practice.Domain.Core.Entities.Student", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
@@ -233,11 +233,11 @@ namespace Practice.Infrastructure.Migrations
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("OrganizationId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("OrganizationId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<int?>("PracticeDatesId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("PracticeDatesId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("ReportFileName")
                         .HasColumnType("longtext");
@@ -250,10 +250,10 @@ namespace Practice.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("TeacherId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
                     b.Property<int>("Year")
@@ -274,9 +274,9 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Practice.Domain.Core.Entities.Teacher", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
@@ -295,7 +295,7 @@ namespace Practice.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -442,7 +442,9 @@ namespace Practice.Infrastructure.Migrations
 
                     b.HasOne("Practice.Domain.Core.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Organization");
 
@@ -457,7 +459,9 @@ namespace Practice.Infrastructure.Migrations
                 {
                     b.HasOne("Practice.Domain.Core.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
