@@ -27,11 +27,12 @@ namespace Practice.Application.Services.Token
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
+            var role = await _userManager.GetRolesAsync(user);
             var tokenDescription = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("role", user.Role.Name),
+                    new Claim("role", role.FirstOrDefault()),
                     new Claim("username", user.UserName),
                     new Claim("id", user.Id.ToString())
                 }),
