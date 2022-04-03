@@ -1,7 +1,4 @@
-﻿
-using Microsoft.IdentityModel.Tokens;
-using Practice.Domain.Core.Entities;
-using System.IdentityModel.Tokens.Jwt;
+﻿using Practice.Domain.Core.Entities;
 using System.Threading.Tasks;
 
 namespace Practice.Application.Services.Token

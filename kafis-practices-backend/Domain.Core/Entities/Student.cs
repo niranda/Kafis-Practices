@@ -43,21 +43,7 @@ namespace Practice.Domain.Core.Entities
         [Column(TypeName = "nvarchar(25)")]
         public string GroupCode { get; set; }
         [Range(1, 100)]
-        public int? Grade
-        {
-            get
-            {
-                return _grade;
-            }
-            set
-            {
-                if (value > 100)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                _grade = value;
-            }
-        }
+        public int? Grade { get; set; }
         public string ReportFileName { get; set; }
 
         public Guid? TeacherId { get; set; }

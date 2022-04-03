@@ -5,6 +5,7 @@ using Practice.Application.Models.Admin;
 using Practice.Application.Services.Document;
 using Practice.Application.Services.OrganizationN;
 using Practice.Application.Services.StudentN;
+using Practice.Application.Services.UserN;
 using Practice.Domain.Core.Common.Constants;
 using Practice.Domain.Core.Stores.File.FileUploadN;
 using Practice.WebAPI.Filters;
@@ -21,17 +22,20 @@ namespace Practice.WebAPI.Controllers
         private readonly IOrganizationService organizationService;
         private readonly IDocumentService documentService;
         private readonly IFileUploadService fileUploadService;
+        private readonly IUserService _userService;
 
         public AdminController(
             IStudentService studentService,
             IOrganizationService organizationService,
             IDocumentService documentService,
-            IFileUploadService fileUploadService)
+            IFileUploadService fileUploadService,
+            IUserService userService)
         {
             this.studentService = studentService;
             this.organizationService = organizationService;
             this.documentService = documentService;
             this.fileUploadService = fileUploadService;
+            _userService = userService;
         }
 
         [Authorize(Roles = RoleNameConstants.Admin)]
@@ -43,6 +47,15 @@ namespace Practice.WebAPI.Controllers
             var organizationDeleteResult = await organizationService.DeleteAllOrganizations();
 
             return Ok(studentsDeleteResult && organizationDeleteResult);
+        }
+
+        [Authorize(Roles = RoleNameConstants.Admin)]
+        [HttpPost("sendUserData")]
+        //POST: api/Admin/report
+        public async Task<IActionResult> SendUserDate([FromBody] SendDateParams parameters)
+        {
+            await _userService.SendDataOnEmailAddress(parameters.UserIds);
+            return Ok();
         }
 
         [Authorize(Roles = RoleNameConstants.Admin)]

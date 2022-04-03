@@ -2,6 +2,7 @@
 using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Stores.StudentN;
+using Practice.Domain.Models;
 using Practice.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
@@ -32,21 +33,35 @@ namespace Practice.Infrastructure.Stores
             return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).Where(s => s.UserId == userId).SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Student>> GetAll()
+        public async Task<IEnumerable<Student>> GetAll(SortParams param = null)
         {
-            return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization)
+            var students = await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization)
                                          .Include(s => s.PracticeDates).Where(s => !s.IsDeleted).ToListAsync();
+
+            if (param != null)
+            {
+                students = Sort(students, param.SortBy, param.SortDirection).ToList();
+            }
+
+            return students;
         }
 
-        public async Task<IEnumerable<Student>> GetAllWithCredentials()
+        public async Task<IEnumerable<Student>> GetAllWithCredentials(SortParams param = null)
         {
-            return await context.Students.AsNoTracking().Include(s => s.User).Where(s => !s.IsDeleted).ToListAsync();
+            var students = await context.Students.AsNoTracking().Include(s => s.User).Where(s => !s.IsDeleted).ToListAsync();
+
+            if (param != null)
+            {
+                students = Sort(students, param.SortBy, param.SortDirection).ToList();
+            }
+
+            return students;
         }
 
-        public async Task<IEnumerable<Student>> GetBySearchParams(int year, GradeLevelEnum gradeLevel, string specialty)
+        public async Task<IEnumerable<Student>> GetBySearchParams(int year, GradeLevelEnum gradeLevel)
         {
             return await context.Students.AsNoTracking().Include(s => s.Organization)
-                .Where(s => s.Year == year && s.GradeLevel == gradeLevel && s.Specialty == specialty && !s.IsDeleted).ToListAsync();
+                .Where(s => s.Year == year && s.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync();
         }
 
         public IQueryable<Student> GetStudentsForOrder(DegreeLevelEnum degreeLevel, string specialty)
@@ -116,6 +131,23 @@ namespace Practice.Infrastructure.Stores
 
             await context.SaveChangesAsync();
             return true;
+        }
+
+        private IEnumerable<Student> Sort(List<Student> students, string sortBy, SortDirection sortDirection)
+        {
+            return (sortBy.ToUpperInvariant(), sortDirection) switch
+            {
+                ("GROUP", SortDirection.ASC) => students.OrderBy(x => x.GroupCode),
+                ("GROUP", SortDirection.DESC) => students.OrderByDescending(x => x.GroupCode),
+                ("SPECIALIZATION", SortDirection.ASC) => students.OrderBy(x => x.Specialization),
+                ("SPECIALIZATION", SortDirection.DESC) => students.OrderByDescending(x => x.Specialization),
+                ("TEACHER", SortDirection.ASC) => students.OrderBy(x => x.Teacher.FullName),
+                ("TEACHER", SortDirection.DESC) => students.OrderByDescending(x => x.Teacher.FullName),
+                ("PRACTICEDATES", SortDirection.ASC) => students.OrderBy(x => x.PracticeDates?.StartDate),
+                ("PRACTICEDATES", SortDirection.DESC) => students.OrderByDescending(x => x.PracticeDates?.StartDate),
+
+                _ => students
+            };
         }
     }
 }

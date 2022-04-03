@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
+using Practice.Application.Services.Encryption;
+using Practice.Application.Settings;
 using Practice.Domain.Core.Common.Constants;
 using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Entities;
@@ -38,23 +40,24 @@ namespace Practice.WebAPI
                 var userManager = services.GetRequiredService<UserManager<User>>();
                 var rolesManager = services.GetRequiredService<RoleManager<Role>>();
                 var context = services.GetRequiredService<ApplicationContext>();
-                await EnsureUserCreated(userManager, rolesManager, context);
+                var settings = services.GetRequiredService<EncryptionSettings>();
+                await EnsureUserCreated(userManager, rolesManager, context, settings);
             }
             catch (Exception)
             {
             }
         }
 
-        private static async Task EnsureUserCreated(UserManager<User> userManager, RoleManager<Role> roleManager, ApplicationContext context)
+        private static async Task EnsureUserCreated(UserManager<User> userManager, RoleManager<Role> roleManager, ApplicationContext context, EncryptionSettings settings)
         {
             string adminUserName = "BigDaddy";
-            string adminPassword = "Aa123456";
+            string adminPassword = EncryptionService.EncryptString("Aa123456", settings.Key);
 
             string teacherUserName = "SmallerDaddy";
-            string teacherPassword = "Bb123456";
+            string teacherPassword = EncryptionService.EncryptString("Bb123456", settings.Key);
 
             string studentUserName = "SmallestDaddy";
-            string studentPassword = "Cc123456";
+            string studentPassword = EncryptionService.EncryptString("123456", settings.Key);
 
             if (await roleManager.FindByNameAsync(RoleNameConstants.Admin) == null)
             {
@@ -77,7 +80,9 @@ namespace Practice.WebAPI
 
                 User superAdmin = new User(adminUserName, superAdminRole);
 
-                IdentityResult result = await userManager.CreateAsync(superAdmin, adminPassword);
+                IdentityResult result = await userManager.CreateAsync(superAdmin);
+
+                superAdmin.PasswordHash = adminPassword;
 
                 if (result.Succeeded)
                 {
@@ -91,7 +96,9 @@ namespace Practice.WebAPI
 
                 User superTeacher = new User(teacherUserName, superTeacherRole);
 
-                IdentityResult result = await userManager.CreateAsync(superTeacher, teacherPassword);
+                IdentityResult result = await userManager.CreateAsync(superTeacher);
+
+                superTeacher.PasswordHash = teacherPassword;
 
                 if (result.Succeeded)
                 {
@@ -107,7 +114,9 @@ namespace Practice.WebAPI
 
                 User superStudent = new User(studentUserName, superStudentRole);
 
-                IdentityResult result = await userManager.CreateAsync(superStudent, studentPassword);
+                IdentityResult result = await userManager.CreateAsync(superStudent);
+
+                superStudent.PasswordHash = studentPassword;
 
                 if (result.Succeeded)
                 {

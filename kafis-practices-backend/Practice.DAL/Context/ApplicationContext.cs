@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Entities.Base;
@@ -19,6 +18,20 @@ namespace Practice.Infrastructure.Context
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<PracticeDates> PracticeDates { get; set; }
+        public DbSet<Manager> Managers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Manager>().HasOne(t => t.Organization)
+                    .WithOne(t => t.Manager)
+                      .HasForeignKey<Organization>(t => t.ManagerId);
+
+            modelBuilder.Entity<Organization>().HasOne(t => t.Manager)
+                     .WithOne(t => t.Organization)
+                     .HasForeignKey<Manager>(t => t.OrganizationId);
+
+            base.OnModelCreating(modelBuilder);
+        }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

@@ -12,6 +12,7 @@ using Practice.Domain.Core.Stores.File.FileUploadN;
 using Practice.Domain.Core.Stores.Practice;
 using Practice.Domain.Core.Stores.StudentN;
 using Practice.Domain.Core.Stores.TeacherN;
+using Practice.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,14 +85,14 @@ namespace Practice.Application.Services.StudentN
             return mapper.Map<StudentDTO>(await studentRepository.GetByUserId(userId));
         }
 
-        public async Task<IEnumerable<StudentDTO>> GetAllStudents()
+        public async Task<IEnumerable<StudentDTO>> GetAllStudents(SortParams param = null)
         {
-            return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll());
+            return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll(param));
         }
 
-        public async Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials()
+        public async Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials(SortParams param = null)
         {
-            return mapper.Map<IEnumerable<StudentUserDTO>>(await studentRepository.GetAllWithCredentials());
+            return mapper.Map<IEnumerable<StudentUserDTO>>(await studentRepository.GetAllWithCredentials(param));
         }
 
         public async Task<IEnumerable<string>> GetSpecialtiesBySearchParams(SpecialtiesRequestParams parameters)

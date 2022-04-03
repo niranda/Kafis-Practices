@@ -14,7 +14,6 @@ using Practice.Infrastructure.Context;
 using Practice.WebAPI.Configs;
 using Practice.WebAPI.Converters;
 using Practice.WebAPI.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -110,8 +109,6 @@ namespace Practice.WebAPI
                 HttpOnly = HttpOnlyPolicy.None,
                 Secure = CookieSecurePolicy.None
             });
-
-            app.ProcessJwt();
 
             app.UseRouting();
 
