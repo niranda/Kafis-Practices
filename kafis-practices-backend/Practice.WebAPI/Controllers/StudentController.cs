@@ -4,6 +4,7 @@ using Practice.Application.DTOs.User.Student;
 using Practice.Application.Models;
 using Practice.Application.Services.StudentN;
 using Practice.Domain.Core.Common.Constants;
+using Practice.Application.Models.StudentN;
 using Practice.Domain.Core.Common.Enums;
 using Practice.WebAPI.Filters;
 using Practice.WebAPI.Models;

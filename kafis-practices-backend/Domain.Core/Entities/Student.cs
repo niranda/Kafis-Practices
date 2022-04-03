@@ -32,8 +32,6 @@ namespace Practice.Domain.Core.Entities
             }
         }
         [Required]
-        public GradeLevelEnum GradeLevel { get; set; }
-        [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string Specialty { get; set; }
         [Required]
@@ -42,6 +40,8 @@ namespace Practice.Domain.Core.Entities
         [Required]
         [Column(TypeName = "nvarchar(25)")]
         public string GroupCode { get; set; }
+        [Required]
+        public GradeLevelEnum GradeLevel { get; set; }
         [Range(1, 100)]
         public int? Grade
         {
@@ -64,10 +64,12 @@ namespace Practice.Domain.Core.Entities
         public Guid? OrganizationId { get; set; }
         public Guid UserId { get; set; }
         public Guid? PracticeDatesId { get; set; }
+        public Guid? AcademicYearId { get; set; }
 
         public User User { get; set; }
         public Teacher Teacher { get; set; }
         public Organization Organization { get; set; }
         public PracticeDates PracticeDates { get; set; }
+        public AcademicYear AcademicYear { get; set; }
     }
 }

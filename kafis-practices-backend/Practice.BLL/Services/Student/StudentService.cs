@@ -9,6 +9,7 @@ using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Common.Exceptions;
 using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Stores.File.FileUploadN;
+using Practice.Application.Models.StudentN;
 using Practice.Domain.Core.Stores.Practice;
 using Practice.Domain.Core.Stores.StudentN;
 using Practice.Domain.Core.Stores.TeacherN;
@@ -134,6 +135,22 @@ namespace Practice.Application.Services.StudentN
             }
 
             return mapper.Map<StudentDTO>(await studentRepository.Update(student));
+        }
+
+        public async Task<RunDTO> UpdateRun(RunDTO runDTO)
+        {
+            if (runDTO == null)
+                throw new ArgumentNullException(nameof(runDTO));
+
+            return mapper.Map<RunDTO>(await studentRepository.UpdateRun(mapper.Map<Run>(runDTO)));
+        }
+
+        public async Task<RunDTO> AddRun(RunDTO runDTO)
+        {
+            if (runDTO == null)
+                throw new ArgumentNullException(nameof(runDTO));
+
+            return mapper.Map<RunDTO>(await studentRepository.CreateRun(mapper.Map<Run>(runDTO)));
         }
 
         public async Task<UpdateStudentResultDTO> UpdateStudent(StudentDTO studentDTO)

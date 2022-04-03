@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Practice.Application.DTOs.User.Student;
 using Practice.Application.Models;
+using Practice.Application.Models.Admin;
+using Practice.Application.Models.StudentN;
 using Practice.Domain.Core.Common.Enums;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,8 @@ namespace Practice.Application.Services.StudentN
         Task<IEnumerable<string>> GetSpecialtiesByDegreeLevel(DegreeLevelEnum degreeLevel);
         Task<StudentDTO> UpdateStudentGrade(Guid id, int grade);
         Task<StudentDTO> UpdateStudentReport(Guid id, IFormFile fileUpload);
+        Task<RunDTO> UpdateRun(RunDTO runDTO);
+        Task<RunDTO> AddRun(RunDTO runDTO);
         Task<UpdateStudentResultDTO> UpdateStudent(StudentDTO studentDTO);
         Task<bool> DeleteStudent(Guid id);
         Task<bool> DeleteAllStudents();

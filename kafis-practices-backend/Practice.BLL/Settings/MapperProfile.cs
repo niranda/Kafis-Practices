@@ -15,6 +15,7 @@ namespace Practice.Application.Settings
         {
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<Student, StudentDTO>().ReverseMap();
+            CreateMap<Run, RunDTO>().ReverseMap();
             CreateMap<Student, StudentUserDTO>().AfterMap<GetStudentCredentialsAction>();
             CreateMap<StudentUserDTO, Student>();
             CreateMap<StudentOrder, StudentOrderDTO>();

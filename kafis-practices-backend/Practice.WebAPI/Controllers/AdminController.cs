@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Practice.Application.DTOs.Attorney;
+using Practice.Application.DTOs.User.Student;
 using Practice.Application.Models.Admin;
 using Practice.Application.Services.Document;
 using Practice.Application.Services.OrganizationN;
@@ -33,7 +34,7 @@ namespace Practice.WebAPI.Controllers
             this.documentService = documentService;
             this.fileUploadService = fileUploadService;
         }
-
+/*
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpGet("clearDB")]
         //GET: api/Admin/clearDB
@@ -44,7 +45,7 @@ namespace Practice.WebAPI.Controllers
 
             return Ok(studentsDeleteResult && organizationDeleteResult);
         }
-
+*/
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpPost("report")]
         //POST: api/Admin/report
@@ -59,6 +60,22 @@ namespace Practice.WebAPI.Controllers
         public IActionResult GetAdminOrder(AdminOrderRequestParams parameters)
         {
             return Ok(documentService.GetAdminOrder(parameters));
+        }
+
+        [Authorize(Roles = RoleNameConstants.Admin)]
+        [HttpPost("run")]
+        //POST: api/Admin/run
+        public async Task<IActionResult> CreateRun([FromBody] RunDTO runDTO)
+        {
+            return Ok(await studentService.AddRun(runDTO));
+        }
+
+        [Authorize(Roles = RoleNameConstants.Admin)]
+        [HttpPut("run")]
+        //PUT: api/Admin/run
+        public async Task<IActionResult> UpdateRun([FromBody] RunDTO runDTO)
+        {
+            return Ok(await studentService.UpdateRun(runDTO));
         }
 
         [Authorize(Roles = RoleNameConstants.Student + "," + RoleNameConstants.Admin)]
