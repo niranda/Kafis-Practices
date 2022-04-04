@@ -16,7 +16,7 @@ namespace Practice.Application.Services.StudentN
         Task<StudentDTO> GetStudentById(Guid id);
         Task<StudentDTO> GetStudentByUserId(Guid userId);
         Task<IEnumerable<StudentDTO>> GetAllStudents(RunRequestParams parameters);
-        Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials();
+        Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials(RunRequestParams parameters);
         Task<IEnumerable<string>> GetSpecialtiesBySearchParams(SpecialtiesRequestParams parameters);
         Task<IEnumerable<string>> GetSpecialtiesByDegreeLevel(DegreeLevelEnum degreeLevel);
         Task<StudentDTO> UpdateStudentGrade(Guid id, int grade);

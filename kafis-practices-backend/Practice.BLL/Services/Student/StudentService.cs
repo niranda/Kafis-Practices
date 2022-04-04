@@ -90,9 +90,9 @@ namespace Practice.Application.Services.StudentN
             return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
         }
 
-        public async Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials()
+        public async Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials(RunRequestParams parameters)
         {
-            return mapper.Map<IEnumerable<StudentUserDTO>>(await studentRepository.GetAllWithCredentials());
+            return mapper.Map<IEnumerable<StudentUserDTO>>(await studentRepository.GetAllWithCredentials(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
         }
 
         public async Task<IEnumerable<string>> GetSpecialtiesBySearchParams(SpecialtiesRequestParams parameters)

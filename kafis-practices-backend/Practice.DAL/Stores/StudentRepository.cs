@@ -35,12 +35,13 @@ namespace Practice.Infrastructure.Stores
         public async Task<IEnumerable<Student>> GetAll(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel)
         {
             return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).Include(s => s.AcademicYear)
-                 .Where(s => s.AcademicYear.StartDate == startDate && s.AcademicYear.EndDate == endTime && s.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync();
+                .Where(s => s.AcademicYear.StartDate == startDate && s.AcademicYear.EndDate == endTime && s.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync();
         }
 
-        public async Task<IEnumerable<Student>> GetAllWithCredentials()
+        public async Task<IEnumerable<Student>> GetAllWithCredentials(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel)
         {
-            return await context.Students.AsNoTracking().Include(s => s.User).Where(s => !s.IsDeleted).ToListAsync();
+            return await context.Students.AsNoTracking().Include(s => s.User)
+                .Where(s => s.AcademicYear.StartDate == startDate && s.AcademicYear.EndDate == endTime && s.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync();
         }
 
         public async Task<IEnumerable<Student>> GetBySearchParams(int year, GradeLevelEnum gradeLevel, string specialty)

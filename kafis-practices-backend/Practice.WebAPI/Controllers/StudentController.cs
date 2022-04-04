@@ -62,9 +62,9 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpGet("credentials")]
         //GET: api/Student/credentials
-        public async Task<IActionResult> GetStudentsWithCredentials()
+        public async Task<IActionResult> GetStudentsWithCredentials(RunRequestParams parameters)
         {
-            return Ok(await studentService.GetAllStudentsWithCredentials());
+            return Ok(await studentService.GetAllStudentsWithCredentials(parameters));
         }
 
         [Authorize(Roles = RoleNameConstants.Admin)]
