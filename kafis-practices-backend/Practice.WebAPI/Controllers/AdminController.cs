@@ -62,22 +62,6 @@ namespace Practice.WebAPI.Controllers
             return Ok(documentService.GetAdminOrder(parameters));
         }
 
-        [Authorize(Roles = RoleNameConstants.Admin)]
-        [HttpPost("run")]
-        //POST: api/Admin/run
-        public async Task<IActionResult> CreateRun([FromBody] RunDTO runDTO)
-        {
-            return Ok(await studentService.AddRun(runDTO));
-        }
-
-        [Authorize(Roles = RoleNameConstants.Admin)]
-        [HttpPut("run")]
-        //PUT: api/Admin/run
-        public async Task<IActionResult> UpdateRun([FromBody] RunDTO runDTO)
-        {
-            return Ok(await studentService.UpdateRun(runDTO));
-        }
-
         [Authorize(Roles = RoleNameConstants.Student + "," + RoleNameConstants.Admin)]
         [HttpGet("getAttorney")]
         //GET: api/Admin/getAttorney

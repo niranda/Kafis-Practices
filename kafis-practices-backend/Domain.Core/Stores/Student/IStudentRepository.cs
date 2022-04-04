@@ -13,9 +13,7 @@ namespace Practice.Domain.Core.Stores.StudentN
         Task<Student> GetByUserId(Guid userId);
         Task<IEnumerable<Student>> GetAllWithCredentials();
         Task<IEnumerable<Student>> GetBySearchParams(int year, GradeLevelEnum gradeLevel, string specialty);
-        Task<IEnumerable<Student>> GetAll();
-        Task<Run> UpdateRun(Run run);
-        Task<Run> CreateRun(Run run);
+        Task<IEnumerable<Student>> GetAll(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel);
         IQueryable<Student> GetStudentsForOrder(DegreeLevelEnum degreeLevel, string specialty);
         Task<IEnumerable<string>> GetAllSpecialtiesByYearAndGradeLevel(int year, GradeLevelEnum gradeLevel);
         Task<IEnumerable<string>> GetSpecialtiesByDegreeLevel(DegreeLevelEnum degreeLevel);

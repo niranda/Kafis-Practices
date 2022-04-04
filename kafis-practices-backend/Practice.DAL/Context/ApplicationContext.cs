@@ -19,7 +19,6 @@ namespace Practice.Infrastructure.Context
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<PracticeDates> PracticeDates { get; set; }
-        public DbSet<Run> Runs { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

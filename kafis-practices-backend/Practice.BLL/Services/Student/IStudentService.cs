@@ -15,14 +15,12 @@ namespace Practice.Application.Services.StudentN
         Task<AddStudentResultDTO> AddStudent(StudentUserDTO studentDTO);
         Task<StudentDTO> GetStudentById(Guid id);
         Task<StudentDTO> GetStudentByUserId(Guid userId);
-        Task<IEnumerable<StudentDTO>> GetAllStudents();
+        Task<IEnumerable<StudentDTO>> GetAllStudents(RunRequestParams parameters);
         Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials();
         Task<IEnumerable<string>> GetSpecialtiesBySearchParams(SpecialtiesRequestParams parameters);
         Task<IEnumerable<string>> GetSpecialtiesByDegreeLevel(DegreeLevelEnum degreeLevel);
         Task<StudentDTO> UpdateStudentGrade(Guid id, int grade);
         Task<StudentDTO> UpdateStudentReport(Guid id, IFormFile fileUpload);
-        Task<RunDTO> UpdateRun(RunDTO runDTO);
-        Task<RunDTO> AddRun(RunDTO runDTO);
         Task<UpdateStudentResultDTO> UpdateStudent(StudentDTO studentDTO);
         Task<bool> DeleteStudent(Guid id);
         Task<bool> DeleteAllStudents();

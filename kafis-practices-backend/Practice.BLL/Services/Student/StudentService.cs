@@ -85,9 +85,9 @@ namespace Practice.Application.Services.StudentN
             return mapper.Map<StudentDTO>(await studentRepository.GetByUserId(userId));
         }
 
-        public async Task<IEnumerable<StudentDTO>> GetAllStudents()
+        public async Task<IEnumerable<StudentDTO>> GetAllStudents(RunRequestParams parameters)
         {
-            return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll());
+            return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
         }
 
         public async Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials()
@@ -135,22 +135,6 @@ namespace Practice.Application.Services.StudentN
             }
 
             return mapper.Map<StudentDTO>(await studentRepository.Update(student));
-        }
-
-        public async Task<RunDTO> UpdateRun(RunDTO runDTO)
-        {
-            if (runDTO == null)
-                throw new ArgumentNullException(nameof(runDTO));
-
-            return mapper.Map<RunDTO>(await studentRepository.UpdateRun(mapper.Map<Run>(runDTO)));
-        }
-
-        public async Task<RunDTO> AddRun(RunDTO runDTO)
-        {
-            if (runDTO == null)
-                throw new ArgumentNullException(nameof(runDTO));
-
-            return mapper.Map<RunDTO>(await studentRepository.CreateRun(mapper.Map<Run>(runDTO)));
         }
 
         public async Task<UpdateStudentResultDTO> UpdateStudent(StudentDTO studentDTO)

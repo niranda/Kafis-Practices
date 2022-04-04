@@ -32,11 +32,10 @@ namespace Practice.Infrastructure.Stores
             return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).Where(s => s.UserId == userId).SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Student>> GetAll()
+        public async Task<IEnumerable<Student>> GetAll(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel)
         {
-            var run = await context.Runs.AsNoTracking().Include(x => x.AcademicYear).FirstOrDefaultAsync();
             return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).Include(s => s.AcademicYear)
-                 .Where(s => s.AcademicYear.StartDate == run.AcademicYear.StartDate && s.AcademicYear.EndDate == run.AcademicYear.EndDate && s.GradeLevel == run.GradeLevel && !s.IsDeleted).ToListAsync();
+                 .Where(s => s.AcademicYear.StartDate == startDate && s.AcademicYear.EndDate == endTime && s.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync();
         }
 
         public async Task<IEnumerable<Student>> GetAllWithCredentials()
@@ -76,20 +75,6 @@ namespace Practice.Infrastructure.Stores
             else
                 return await context.Students.AsNoTracking().Where(s => s.GradeLevel == GradeLevelEnum.Second && !s.IsDeleted)
                     .Select(s => s.Specialty).Distinct().ToListAsync();
-        }
-
-        public async Task<Run> UpdateRun(Run run)
-        {
-            context.Update(run);
-            await context.SaveChangesAsync();
-            return run;
-        }
-
-        public async Task<Run> CreateRun(Run run)
-        {
-            await context.Runs.AddAsync(run);
-            await context.SaveChangesAsync();
-            return run;
         }
 
         public async Task<Student> Create(Student student)
