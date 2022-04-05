@@ -34,18 +34,7 @@ namespace Practice.WebAPI.Controllers
             this.documentService = documentService;
             this.fileUploadService = fileUploadService;
         }
-/*
-        [Authorize(Roles = RoleNameConstants.Admin)]
-        [HttpGet("clearDB")]
-        //GET: api/Admin/clearDB
-        public async Task<IActionResult> ClearDatabase()
-        {
-            var studentsDeleteResult = await studentService.DeleteAllStudents();
-            var organizationDeleteResult = await organizationService.DeleteAllOrganizations();
 
-            return Ok(studentsDeleteResult && organizationDeleteResult);
-        }
-*/
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpPost("report")]
         //POST: api/Admin/report

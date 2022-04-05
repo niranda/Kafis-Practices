@@ -9,6 +9,6 @@ namespace Practice.Application.DTOs.Organization
         public string Name { get; set; }
         public string City { get; set; }
 
-        public ICollection<StudentDTO> Students { get; set; }
+        public IEnumerable<StudentDTO> Students { get; set; }
     }
 }

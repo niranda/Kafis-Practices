@@ -114,7 +114,7 @@ namespace Practice.WebAPI
                     await userManager.AddToRoleAsync(superStudent, RoleNameConstants.Student);
                 }
 
-                context.Students.Add(new Student { Id = Guid.NewGuid(), FullName = superStudent.UserName, Year = DateTime.UtcNow.Year, GradeLevel = GradeLevelEnum.FirstFull, Specialty = "121", Specialization = "2", UserId = superStudent.Id });
+                context.Students.Add(new Student { Id = Guid.NewGuid(), FullName = superStudent.UserName, Year = DateTime.UtcNow.Year, Specialty = "121", Specialization = "2", UserId = superStudent.Id });
             }
         }
     }

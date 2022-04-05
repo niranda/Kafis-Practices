@@ -38,7 +38,7 @@ namespace Practice.Infrastructure.Stores
         public async Task<IEnumerable<Teacher>> GetAll()
         {
             return await context.Teachers.AsNoTracking().Include(t => t.Students.Where(s => !s.IsDeleted)).Include(t => t.User)
-                                         .Where(t => !t.IsDeleted).OrderByDescending(t => t.Students.Count).ToListAsync();
+                                         .Where(t => !t.IsDeleted).OrderByDescending(t => t.Students.Count()).ToListAsync();
         }
 
         public async Task<IEnumerable<Teacher>> GetAllWithCredentials()

@@ -59,7 +59,7 @@ namespace Practice.Application.Services.StudentN
 
             studentDTO.UserId = await userService.CreateUser(RoleNameConstants.Student);
 
-            studentDTO.PracticeDatesId = (await practiceDatesRepository.GetByGradeLevel(studentDTO.GradeLevel)).Id;
+            studentDTO.PracticeDatesId = (await practiceDatesRepository.GetByGradeLevel(studentDTO.Run.GradeLevel)).Id;
 
             var student = mapper.Map<Student>(studentDTO);
             var addedStudent = mapper.Map<StudentDTO>(await studentRepository.Create(student));
@@ -150,7 +150,7 @@ namespace Practice.Application.Services.StudentN
                 };
             }
 
-            var practiceDates = mapper.Map<PracticeDatesDTO>(await practiceDatesRepository.GetByGradeLevel(studentDTO.GradeLevel));
+            var practiceDates = mapper.Map<PracticeDatesDTO>(await practiceDatesRepository.GetByGradeLevel(studentDTO.Run.GradeLevel));
             studentDTO.PracticeDatesId = practiceDates.Id;
             studentDTO.PracticeDates = practiceDates;
 
@@ -183,7 +183,7 @@ namespace Practice.Application.Services.StudentN
             {
                 var teacherId = studentDTO.TeacherId.Value;
                 var teacher = await teacherRepository.GetById(teacherId);
-                if (teacher.Students.Count >= 8 && !teacher.Students.Any(s => s.Id == studentDTO.Id))
+                if (teacher.Students.Count() >= 8 && !teacher.Students.Any(s => s.Id == studentDTO.Id))
                     return false;
             }
             return true;

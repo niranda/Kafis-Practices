@@ -102,7 +102,7 @@ namespace Practice.Application.Services.Document
             if (students == null || !students.Any())
                 throw new StudentNotFoundException();
 
-            var groupedStudentOrders = students.AsEnumerable().GroupBy(s => new { s.GradeLevel, s.Organization.Name }, (key, group) =>
+            var groupedStudentOrders = students.AsEnumerable().GroupBy(s => new { s.Run.GradeLevel, s.Organization.Name }, (key, group) =>
                 new StudentOrder { GradeLevel = key.GradeLevel, OrganizationName = key.Name, Students = group.ToList() })
                     .GroupBy(s => new { s.GradeLevel }, (key, group) => new GroupedStudentOrder { GradeLevel = key.GradeLevel, StudentOrders = group.ToList() }).ToList();
 

@@ -17,6 +17,7 @@ namespace Practice.Domain.Core.Entities
         public string Position { get; set; }
 
         public User User { get; set; }
-        public ICollection<Student> Students { get; set; }
+        public IEnumerable<Run> Runs { get; set; }
+        public IEnumerable<Student> Students { get; set; }
     }
 }
