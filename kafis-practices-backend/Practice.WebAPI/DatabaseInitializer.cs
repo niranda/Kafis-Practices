@@ -99,6 +99,7 @@ namespace Practice.WebAPI
                 }
 
                 context.Teachers.Add(new Teacher { Id = Guid.NewGuid(), FullName = superTeacher.UserName, Position = "Mega", UserId = superTeacher.Id });
+                await context.SaveChangesAsync();
             }
 
             if (await userManager.FindByEmailAsync(studentUserName) == null)
@@ -115,6 +116,7 @@ namespace Practice.WebAPI
                 }
 
                 context.Students.Add(new Student { Id = Guid.NewGuid(), FullName = superStudent.UserName, Year = DateTime.UtcNow.Year, Specialty = "121", Specialization = "2", UserId = superStudent.Id });
+                await context.SaveChangesAsync();
             }
         }
     }
