@@ -87,17 +87,15 @@ namespace Practice.Application.Services.StudentN
         }
 
         public async Task<IEnumerable<StudentDTO>> GetAllStudents(RunRequestParams parameters)
-        public async Task<IEnumerable<StudentDTO>> GetAllStudents(SortParams param = null)
         {
-            return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
-            return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll(param));
+            return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll
+                (parameters.StartDate, parameters.EndDate, parameters.GradeLevel, parameters.SortBy, parameters.SortDirection));
         }
 
         public async Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials(RunRequestParams parameters)
-        public async Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials(SortParams param = null)
         {
-            return mapper.Map<IEnumerable<StudentUserDTO>>(await studentRepository.GetAllWithCredentials(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
-            return mapper.Map<IEnumerable<StudentUserDTO>>(await studentRepository.GetAllWithCredentials(param));
+            return mapper.Map<IEnumerable<StudentUserDTO>>(await studentRepository.GetAllWithCredentials
+                (parameters.StartDate, parameters.EndDate, parameters.GradeLevel, parameters.SortBy, parameters.SortDirection));
         }
 
         public async Task<IEnumerable<string>> GetSpecialtiesBySearchParams(SpecialtiesRequestParams parameters)

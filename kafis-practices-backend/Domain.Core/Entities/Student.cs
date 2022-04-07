@@ -9,7 +9,6 @@ namespace Practice.Domain.Core.Entities
     public class Student : BaseEntity
     {
         private int _year;
-        private int? _grade;
 
         [Required]
         [Column(TypeName = "nvarchar(100)")]

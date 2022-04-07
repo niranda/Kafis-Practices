@@ -10,6 +10,7 @@ using Practice.WebAPI.Filters;
 using Practice.WebAPI.Models;
 using System;
 using System.Threading.Tasks;
+using Practice.Domain.Models;
 
 namespace Practice.WebAPI.Controllers
 {

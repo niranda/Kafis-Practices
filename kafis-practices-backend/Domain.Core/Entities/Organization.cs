@@ -15,8 +15,6 @@ namespace Practice.Domain.Core.Entities
         [Column(TypeName = "nvarchar(100)")]
         public string City { get; set; }
         public Guid ManagerId { get; set; }
-        public ICollection<Student> Students { get; set; }
-
         public IEnumerable<Student> Students { get; set; }
         public Manager Manager { get; set; }
     }
