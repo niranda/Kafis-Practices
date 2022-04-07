@@ -28,7 +28,7 @@ namespace Practice.Application.Services.Document
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
 
-            var students = (await studentRepository.GetBySearchParams(parameters.Year, parameters.GradeLevel, parameters.Specialty)).ToList();
+            var students = (await studentRepository.GetBySearchParams(parameters.Year, parameters.GradeLevel)).ToList();
 
             if (students == null || !students.Any())
                 throw new StudentNotFoundException();
@@ -86,7 +86,6 @@ namespace Practice.Application.Services.Document
             {
                 GradeLevel = parameters.GradeLevel,
                 Year = parameters.Year,
-                Specialty = parameters.Specialty,
                 AllStudentsAmount = allStudentsAmount,
                 SuccessfulStudentsAmount = successfulStudentsAmount,
                 FailedStudentsAmount = failedStudentsAmount,

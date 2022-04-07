@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Practice.Domain.Core", "Dom
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SubDomains", "SubDomains", "{6BFADFA8-C4B6-4A88-86D3-4ECD2EC1144D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practice.MailServices", "Practice.MailServices\Practice.MailServices.csproj", "{6B75366B-E771-4235-8241-8A07FADAAFA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{5AD90B87-43D0-4FE5-B371-D97D6BFEA2E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AD90B87-43D0-4FE5-B371-D97D6BFEA2E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AD90B87-43D0-4FE5-B371-D97D6BFEA2E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B75366B-E771-4235-8241-8A07FADAAFA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B75366B-E771-4235-8241-8A07FADAAFA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B75366B-E771-4235-8241-8A07FADAAFA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B75366B-E771-4235-8241-8A07FADAAFA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{F95521A0-0F45-4403-B6E4-8BD515482D14} = {254E1768-2D10-4B4E-92ED-8848B997506F}
 		{07BBF884-4AF4-400C-B55B-B36C2693012F} = {6BFADFA8-C4B6-4A88-86D3-4ECD2EC1144D}
 		{5AD90B87-43D0-4FE5-B371-D97D6BFEA2E5} = {254E1768-2D10-4B4E-92ED-8848B997506F}
+		{6B75366B-E771-4235-8241-8A07FADAAFA9} = {6BFADFA8-C4B6-4A88-86D3-4ECD2EC1144D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {07951CBB-46D2-4D2A-8CC7-140E458C0A92}

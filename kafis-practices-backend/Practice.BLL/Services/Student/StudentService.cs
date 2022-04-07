@@ -13,6 +13,7 @@ using Practice.Application.Models.StudentN;
 using Practice.Domain.Core.Stores.Practice;
 using Practice.Domain.Core.Stores.StudentN;
 using Practice.Domain.Core.Stores.TeacherN;
+using Practice.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,13 +87,17 @@ namespace Practice.Application.Services.StudentN
         }
 
         public async Task<IEnumerable<StudentDTO>> GetAllStudents(RunRequestParams parameters)
+        public async Task<IEnumerable<StudentDTO>> GetAllStudents(SortParams param = null)
         {
             return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
+            return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll(param));
         }
 
         public async Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials(RunRequestParams parameters)
+        public async Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials(SortParams param = null)
         {
             return mapper.Map<IEnumerable<StudentUserDTO>>(await studentRepository.GetAllWithCredentials(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
+            return mapper.Map<IEnumerable<StudentUserDTO>>(await studentRepository.GetAllWithCredentials(param));
         }
 
         public async Task<IEnumerable<string>> GetSpecialtiesBySearchParams(SpecialtiesRequestParams parameters)

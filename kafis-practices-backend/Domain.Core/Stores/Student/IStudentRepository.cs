@@ -1,5 +1,6 @@
 ﻿using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Entities;
+using Practice.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,9 @@ namespace Practice.Domain.Core.Stores.StudentN
         Task<IEnumerable<Student>> GetAllWithCredentials(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel);
         Task<IEnumerable<Student>> GetBySearchParams(int year, GradeLevelEnum gradeLevel, string specialty);
         Task<IEnumerable<Student>> GetAll(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel);
+        Task<IEnumerable<Student>> GetAll(SortParams param = null);
+        Task<IEnumerable<Student>> GetAllWithCredentials(SortParams param = null);
+        Task<IEnumerable<Student>> GetBySearchParams(int year, GradeLevelEnum gradeLevel);
         IQueryable<Student> GetStudentsForOrder(DegreeLevelEnum degreeLevel, string specialty);
         Task<IEnumerable<string>> GetAllSpecialtiesByYearAndGradeLevel(int year, GradeLevelEnum gradeLevel);
         Task<IEnumerable<string>> GetSpecialtiesByDegreeLevel(DegreeLevelEnum degreeLevel);

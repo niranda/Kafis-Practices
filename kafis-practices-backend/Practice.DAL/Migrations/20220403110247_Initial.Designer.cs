@@ -9,7 +9,7 @@ using Practice.Infrastructure.Context;
 namespace Practice.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220402113107_Initial")]
+    [Migration("20220403110247_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,6 +122,45 @@ namespace Practice.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Manager", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("OrganizationId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Managers");
+                });
+
             modelBuilder.Entity("Practice.Domain.Core.Entities.Organization", b =>
                 {
                     b.Property<Guid>("Id")
@@ -137,6 +176,9 @@ namespace Practice.Infrastructure.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<Guid>("ManagerId")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("datetime(6)");
@@ -428,6 +470,25 @@ namespace Practice.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Manager", b =>
+                {
+                    b.HasOne("Practice.Domain.Core.Entities.Organization", "Organization")
+                        .WithOne("Manager")
+                        .HasForeignKey("Practice.Domain.Core.Entities.Manager", "OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Practice.Domain.Core.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Practice.Domain.Core.Entities.Student", b =>
                 {
                     b.HasOne("Practice.Domain.Core.Entities.Organization", "Organization")
@@ -481,6 +542,8 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Practice.Domain.Core.Entities.Organization", b =>
                 {
+                    b.Navigation("Manager");
+
                     b.Navigation("Students");
                 });
 

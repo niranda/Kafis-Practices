@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Practice.Application.DTOs.Login;
-using Practice.Application.Services.Encryption;
 using Practice.Application.Services.Token;
-using Practice.Application.Settings;
 using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Entities;
-using Practice.Domain.Core.Stores.UserN;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace Practice.Application.Services.Auth
