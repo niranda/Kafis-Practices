@@ -1,8 +1,10 @@
-﻿namespace Practice.Application.DTOs.Base
+﻿using System;
+
+namespace Practice.Application.DTOs.Base
 {
     public class BaseDTO
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

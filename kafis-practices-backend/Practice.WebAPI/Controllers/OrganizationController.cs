@@ -4,6 +4,7 @@ using Practice.Application.DTOs.Organization;
 using Practice.Application.Services.OrganizationN;
 using Practice.Domain.Core.Common.Constants;
 using Practice.WebAPI.Filters;
+using System;
 using System.Threading.Tasks;
 
 namespace Practice.WebAPI.Controllers
@@ -31,7 +32,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize]
         [HttpGet("{id}")]
         //GET: api/Organization/{id}
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             return Ok(await organizationService.GetOrganizationById(id));
         }
@@ -55,7 +56,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpDelete("{id}")]
         //DELETE: api/Organization/{id}
-        public async Task<IActionResult> DeleteOrganization([FromRoute] int id)
+        public async Task<IActionResult> DeleteOrganization([FromRoute] Guid id)
         {
             return Ok(await organizationService.DeleteOrganization(id));
         }

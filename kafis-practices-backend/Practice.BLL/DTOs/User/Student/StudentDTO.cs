@@ -2,8 +2,10 @@
 using Practice.Application.DTOs.Organization;
 using Practice.Application.DTOs.Practice;
 using Practice.Application.DTOs.User.Teacher;
+using Practice.Application.DTOs.Academic;
 using Practice.Domain.Core.Common.Enums;
 using System;
+using Practice.Application.DTOs.Run;
 
 namespace Practice.Application.DTOs.User.Student
 {
@@ -28,7 +30,6 @@ namespace Practice.Application.DTOs.User.Student
                 _year = value;
             }
         }
-        public GradeLevelEnum GradeLevel { get; set; }
         public string Specialty { get; set; }
         public string Specialization { get; set; }
         public string GroupCode { get; set; }
@@ -49,13 +50,16 @@ namespace Practice.Application.DTOs.User.Student
         }
         public string ReportFileName { get; set; }
 
-        public int? TeacherId { get; set; }
-        public int? OrganizationId { get; set; }
+        public Guid? TeacherId { get; set; }
+        public Guid? OrganizationId { get; set; }
         public Guid? UserId { get; set; }
-        public int? PracticeDatesId { get; set; }
+        public Guid? PracticeDatesId { get; set; }
+        public Guid? RunId { get; set; }
+
 
         public TeacherDTO Teacher { get; set; }
         public OrganizationDTO Organization { get; set; }
         public PracticeDatesDTO PracticeDates { get; set; }
+        public RunDTO Run { get; set; }
     }
 }

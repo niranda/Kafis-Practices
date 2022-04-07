@@ -18,7 +18,7 @@ namespace Practice.Infrastructure.Stores
             this.context = context;
         }
 
-        public async Task<Student> GetById(int id, bool asNoTracking = true)
+        public async Task<Student> GetById(Guid id, bool asNoTracking = true)
         {
             if (asNoTracking)
             {
@@ -27,42 +27,43 @@ namespace Practice.Infrastructure.Stores
             return await context.Students.Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).SingleOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<Student> GetByUserId(string userId)
+        public async Task<Student> GetByUserId(Guid userId)
         {
-            return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).Where(s => s.UserId == new Guid(userId)).SingleOrDefaultAsync();
+            return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).Where(s => s.UserId == userId).SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Student>> GetAll()
+        public async Task<IEnumerable<Student>> GetAll(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel)
         {
-            return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization)
-                                         .Include(s => s.PracticeDates).Where(s => !s.IsDeleted).ToListAsync();
+            return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).Include(s => s.Run)
+                .Where(s => s.Run.AcademicYear.StartDate == startDate && s.Run.AcademicYear.EndDate == endTime && s.Run.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync();
         }
 
-        public async Task<IEnumerable<Student>> GetAllWithCredentials()
+        public async Task<IEnumerable<Student>> GetAllWithCredentials(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel)
         {
-            return await context.Students.AsNoTracking().Include(s => s.User).Where(s => !s.IsDeleted).ToListAsync();
+            return await context.Students.AsNoTracking().Include(s => s.User)
+                .Where(s => s.Run.AcademicYear.StartDate == startDate && s.Run.AcademicYear.EndDate == endTime && s.Run.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync();
         }
 
         public async Task<IEnumerable<Student>> GetBySearchParams(int year, GradeLevelEnum gradeLevel, string specialty)
         {
             return await context.Students.AsNoTracking().Include(s => s.Organization)
-                .Where(s => s.Year == year && s.GradeLevel == gradeLevel && s.Specialty == specialty && !s.IsDeleted).ToListAsync();
+                .Where(s => s.Year == year && s.Run.GradeLevel == gradeLevel && s.Specialty == specialty && !s.IsDeleted).ToListAsync();
         }
 
         public IQueryable<Student> GetStudentsForOrder(DegreeLevelEnum degreeLevel, string specialty)
         {
             if (degreeLevel == DegreeLevelEnum.Bachelor)
                 return context.Students.AsNoTracking().Include(s => s.Organization).Include(s => s.Teacher).Include(s => s.PracticeDates)
-                .Where(s => (s.GradeLevel == GradeLevelEnum.FirstFull || s.GradeLevel == GradeLevelEnum.FirstReduced)
+                .Where(s => (s.Run.GradeLevel == GradeLevelEnum.FirstFull || s.Run.GradeLevel == GradeLevelEnum.FirstReduced)
                     && s.Specialty == specialty && s.Organization != null && !s.IsDeleted);
             else
                 return context.Students.AsNoTracking().Include(s => s.Organization).Include(s => s.Teacher).Include(s => s.PracticeDates)
-                .Where(s => s.GradeLevel == GradeLevelEnum.Second && s.Specialty == specialty && s.Organization != null && !s.IsDeleted);
+                .Where(s => s.Run.GradeLevel == GradeLevelEnum.Second && s.Specialty == specialty && s.Organization != null && !s.IsDeleted);
         }
 
         public async Task<IEnumerable<string>> GetAllSpecialtiesByYearAndGradeLevel(int year, GradeLevelEnum gradeLevel)
         {
-            return await context.Students.AsNoTracking().Where(s => s.Year == year && s.GradeLevel == gradeLevel && !s.IsDeleted)
+            return await context.Students.AsNoTracking().Where(s => s.Year == year && s.Run.GradeLevel == gradeLevel && !s.IsDeleted)
                 .Select(s => s.Specialty).Distinct().ToListAsync();
         }
 
@@ -70,10 +71,10 @@ namespace Practice.Infrastructure.Stores
         {
             if (degreeLevel == DegreeLevelEnum.Bachelor)
                 return await context.Students.AsNoTracking().Where(s =>
-                    (s.GradeLevel == GradeLevelEnum.FirstFull || s.GradeLevel == GradeLevelEnum.FirstReduced) && !s.IsDeleted)
+                    (s.Run.GradeLevel == GradeLevelEnum.FirstFull || s.Run.GradeLevel == GradeLevelEnum.FirstReduced) && !s.IsDeleted)
                         .Select(s => s.Specialty).Distinct().ToListAsync();
             else
-                return await context.Students.AsNoTracking().Where(s => s.GradeLevel == GradeLevelEnum.Second && !s.IsDeleted)
+                return await context.Students.AsNoTracking().Where(s => s.Run.GradeLevel == GradeLevelEnum.Second && !s.IsDeleted)
                     .Select(s => s.Specialty).Distinct().ToListAsync();
         }
 

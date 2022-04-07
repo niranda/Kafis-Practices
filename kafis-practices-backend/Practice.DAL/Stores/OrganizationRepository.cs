@@ -2,6 +2,7 @@
 using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Stores.OrganizationN;
 using Practice.Infrastructure.Context;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Practice.Infrastructure.Stores
             this.context = context;
         }
 
-        public async Task<Organization> GetById(int id, bool asNoTracking = true)
+        public async Task<Organization> GetById(Guid id, bool asNoTracking = true)
         {
             if (asNoTracking)
             {

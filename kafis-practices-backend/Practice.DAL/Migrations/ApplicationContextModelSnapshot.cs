@@ -120,11 +120,37 @@ namespace Practice.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Practice.Domain.Core.Entities.AcademicYear", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AcademicYear");
+                });
+
             modelBuilder.Entity("Practice.Domain.Core.Entities.Organization", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -150,9 +176,9 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Practice.Domain.Core.Entities.PracticeDates", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
@@ -206,9 +232,12 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Practice.Domain.Core.Entities.Student", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("AcademicYearId")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
@@ -233,11 +262,11 @@ namespace Practice.Infrastructure.Migrations
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("OrganizationId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("OrganizationId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<int?>("PracticeDatesId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("PracticeDatesId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("ReportFileName")
                         .HasColumnType("longtext");
@@ -250,16 +279,18 @@ namespace Practice.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("TeacherId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AcademicYearId");
 
                     b.HasIndex("OrganizationId");
 
@@ -274,9 +305,9 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Practice.Domain.Core.Entities.Teacher", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
@@ -295,7 +326,7 @@ namespace Practice.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -426,8 +457,21 @@ namespace Practice.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Run", b =>
+                {
+                    b.HasOne("Practice.Domain.Core.Entities.AcademicYear", "AcademicYear")
+                        .WithMany()
+                        .HasForeignKey("AcademicYearId");
+
+                    b.Navigation("AcademicYear");
+                });
+
             modelBuilder.Entity("Practice.Domain.Core.Entities.Student", b =>
                 {
+                    b.HasOne("Practice.Domain.Core.Entities.AcademicYear", "AcademicYear")
+                        .WithMany()
+                        .HasForeignKey("AcademicYearId");
+
                     b.HasOne("Practice.Domain.Core.Entities.Organization", "Organization")
                         .WithMany("Students")
                         .HasForeignKey("OrganizationId");
@@ -442,7 +486,11 @@ namespace Practice.Infrastructure.Migrations
 
                     b.HasOne("Practice.Domain.Core.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AcademicYear");
 
                     b.Navigation("Organization");
 
@@ -457,7 +505,9 @@ namespace Practice.Infrastructure.Migrations
                 {
                     b.HasOne("Practice.Domain.Core.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

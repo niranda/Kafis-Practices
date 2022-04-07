@@ -29,7 +29,7 @@ namespace Practice.Application.Services.OrganizationN
             return mapper.Map<OrganizationDTO>(await organizationRepository.Create(mapper.Map<Organization>(organizationDTO)));
         }
 
-        public async Task<OrganizationDTO> GetOrganizationById(int id)
+        public async Task<OrganizationDTO> GetOrganizationById(Guid id)
         {
             var organization = await organizationRepository.GetById(id);
 
@@ -52,7 +52,7 @@ namespace Practice.Application.Services.OrganizationN
             return mapper.Map<OrganizationDTO>(await organizationRepository.Update(mapper.Map<Organization>(organizationDTO)));
         }
 
-        public async Task<bool> DeleteOrganization(int id)
+        public async Task<bool> DeleteOrganization(Guid id)
         {
             var organizationToDelete = await organizationRepository.GetById(id, false);
 

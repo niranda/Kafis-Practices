@@ -8,7 +8,7 @@ namespace Practice.Domain.Core.Entities
 {
     public class Teacher : BaseEntity
     {
-        public Guid? UserId { get; set; }
+        public Guid UserId { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string FullName { get; set; }
@@ -17,6 +17,7 @@ namespace Practice.Domain.Core.Entities
         public string Position { get; set; }
 
         public User User { get; set; }
-        public ICollection<Student> Students { get; set; }
+        public IEnumerable<Run> Runs { get; set; }
+        public IEnumerable<Student> Students { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Practice.Application.DTOs.Attorney;
+using Practice.Application.DTOs.User.Student;
 using Practice.Application.Models.Admin;
 using Practice.Application.Services.Document;
 using Practice.Application.Services.OrganizationN;
@@ -32,17 +33,6 @@ namespace Practice.WebAPI.Controllers
             this.organizationService = organizationService;
             this.documentService = documentService;
             this.fileUploadService = fileUploadService;
-        }
-
-        [Authorize(Roles = RoleNameConstants.Admin)]
-        [HttpGet("clearDB")]
-        //GET: api/Admin/clearDB
-        public async Task<IActionResult> ClearDatabase()
-        {
-            var studentsDeleteResult = await studentService.DeleteAllStudents();
-            var organizationDeleteResult = await organizationService.DeleteAllOrganizations();
-
-            return Ok(studentsDeleteResult && organizationDeleteResult);
         }
 
         [Authorize(Roles = RoleNameConstants.Admin)]

@@ -9,6 +9,7 @@ using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Common.Exceptions;
 using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Stores.File.FileUploadN;
+using Practice.Application.Models.StudentN;
 using Practice.Domain.Core.Stores.Practice;
 using Practice.Domain.Core.Stores.StudentN;
 using Practice.Domain.Core.Stores.TeacherN;
@@ -58,7 +59,7 @@ namespace Practice.Application.Services.StudentN
 
             studentDTO.UserId = await userService.CreateUser(RoleNameConstants.Student);
 
-            studentDTO.PracticeDatesId = (await practiceDatesRepository.GetByGradeLevel(studentDTO.GradeLevel)).Id;
+            studentDTO.PracticeDatesId = (await practiceDatesRepository.GetByGradeLevel(studentDTO.Run.GradeLevel)).Id;
 
             var student = mapper.Map<Student>(studentDTO);
             var addedStudent = mapper.Map<StudentDTO>(await studentRepository.Create(student));
@@ -69,7 +70,7 @@ namespace Practice.Application.Services.StudentN
             };
         }
 
-        public async Task<StudentDTO> GetStudentById(int id)
+        public async Task<StudentDTO> GetStudentById(Guid id)
         {
             var student = await studentRepository.GetById(id);
 
@@ -79,19 +80,19 @@ namespace Practice.Application.Services.StudentN
             return mapper.Map<StudentDTO>(student);
         }
 
-        public async Task<StudentDTO> GetStudentByUserId(string userId)
+        public async Task<StudentDTO> GetStudentByUserId(Guid userId)
         {
             return mapper.Map<StudentDTO>(await studentRepository.GetByUserId(userId));
         }
 
-        public async Task<IEnumerable<StudentDTO>> GetAllStudents()
+        public async Task<IEnumerable<StudentDTO>> GetAllStudents(RunRequestParams parameters)
         {
-            return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll());
+            return mapper.Map<IEnumerable<StudentDTO>>(await studentRepository.GetAll(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
         }
 
-        public async Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials()
+        public async Task<IEnumerable<StudentUserDTO>> GetAllStudentsWithCredentials(RunRequestParams parameters)
         {
-            return mapper.Map<IEnumerable<StudentUserDTO>>(await studentRepository.GetAllWithCredentials());
+            return mapper.Map<IEnumerable<StudentUserDTO>>(await studentRepository.GetAllWithCredentials(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
         }
 
         public async Task<IEnumerable<string>> GetSpecialtiesBySearchParams(SpecialtiesRequestParams parameters)
@@ -104,7 +105,7 @@ namespace Practice.Application.Services.StudentN
             return await studentRepository.GetSpecialtiesByDegreeLevel(degreeLevel);
         }
 
-        public async Task<StudentDTO> UpdateStudentGrade(int id, int grade)
+        public async Task<StudentDTO> UpdateStudentGrade(Guid id, int grade)
         {
             if (grade < 0 || grade > 100)
                 throw new ArgumentOutOfRangeException(nameof(grade));
@@ -118,7 +119,7 @@ namespace Practice.Application.Services.StudentN
             return mapper.Map<StudentDTO>(await studentRepository.Update(student));
         }
 
-        public async Task<StudentDTO> UpdateStudentReport(int id, IFormFile fileUpload)
+        public async Task<StudentDTO> UpdateStudentReport(Guid id, IFormFile fileUpload)
         {
             var student = await studentRepository.GetById(id);
             if (student == null)
@@ -149,7 +150,7 @@ namespace Practice.Application.Services.StudentN
                 };
             }
 
-            var practiceDates = mapper.Map<PracticeDatesDTO>(await practiceDatesRepository.GetByGradeLevel(studentDTO.GradeLevel));
+            var practiceDates = mapper.Map<PracticeDatesDTO>(await practiceDatesRepository.GetByGradeLevel(studentDTO.Run.GradeLevel));
             studentDTO.PracticeDatesId = practiceDates.Id;
             studentDTO.PracticeDates = practiceDates;
 
@@ -161,7 +162,7 @@ namespace Practice.Application.Services.StudentN
             };
         }
 
-        public async Task<bool> DeleteStudent(int id)
+        public async Task<bool> DeleteStudent(Guid id)
         {
             var studentToDelete = await studentRepository.GetById(id, false);
 
@@ -182,7 +183,7 @@ namespace Practice.Application.Services.StudentN
             {
                 var teacherId = studentDTO.TeacherId.Value;
                 var teacher = await teacherRepository.GetById(teacherId);
-                if (teacher.Students.Count >= 8 && !teacher.Students.Any(s => s.Id == studentDTO.Id))
+                if (teacher.Students.Count() >= 8 && !teacher.Students.Any(s => s.Id == studentDTO.Id))
                     return false;
             }
             return true;
