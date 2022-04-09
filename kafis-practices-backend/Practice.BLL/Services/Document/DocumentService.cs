@@ -23,12 +23,12 @@ namespace Practice.Application.Services.Document
             this.studentRepository = studentRepository;
         }
 
-        public async Task<AdminReportResponse> GetAdminReport(AdminReportRequestParams parameters)
+        public async Task<AdminReportResponse> GetAdminReport(AdminRequestParams parameters)
         {
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
 
-            var students = (await studentRepository.GetBySearchParams(parameters.Year, parameters.GradeLevel)).ToList();
+            var students = (await studentRepository.GetBySearchParams(parameters.Run.AcademicYear, parameters.Run.GradeLevel, parameters.Specialty)).ToList();
 
             if (students == null || !students.Any())
                 throw new StudentNotFoundException();
@@ -84,8 +84,8 @@ namespace Practice.Application.Services.Document
 
             return new AdminReportResponse
             {
-                GradeLevel = parameters.GradeLevel,
-                Year = parameters.Year,
+                GradeLevel = parameters.Run.GradeLevel,
+                AcademicYear = parameters.Run.AcademicYear,
                 AllStudentsAmount = allStudentsAmount,
                 SuccessfulStudentsAmount = successfulStudentsAmount,
                 FailedStudentsAmount = failedStudentsAmount,
@@ -94,9 +94,9 @@ namespace Practice.Application.Services.Document
                 StudentsGradesSummary = summaries
             };
         }
-        public IEnumerable<AdminOrderResponse> GetAdminOrder(AdminOrderRequestParams parameters)
+        public IEnumerable<AdminOrderResponse> GetAdminOrder(AdminRequestParams parameters)
         {
-            var students = studentRepository.GetStudentsForOrder(parameters.DegreeLevel, parameters.Specialty);
+            var students = studentRepository.GetStudentsForOrder(parameters.Run.DegreeLevel, parameters.Specialty, parameters.Run.AcademicYear);
 
             if (students == null || !students.Any())
                 throw new StudentNotFoundException();

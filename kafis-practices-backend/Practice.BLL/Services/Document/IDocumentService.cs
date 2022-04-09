@@ -6,7 +6,7 @@ namespace Practice.Application.Services.Document
 {
     public interface IDocumentService
     {
-        Task<AdminReportResponse> GetAdminReport(AdminReportRequestParams parameters);
-        IEnumerable<AdminOrderResponse> GetAdminOrder(AdminOrderRequestParams parameters);
+        Task<AdminReportResponse> GetAdminReport(AdminRequestParams parameters);
+        IEnumerable<AdminOrderResponse> GetAdminOrder(AdminRequestParams parameters);
     }
 }

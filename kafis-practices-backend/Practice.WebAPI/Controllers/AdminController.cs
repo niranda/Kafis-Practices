@@ -42,7 +42,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpPost("report")]
         //POST: api/Admin/report
-        public async Task<IActionResult> GetAdminReport(AdminReportRequestParams parameters)
+        public async Task<IActionResult> GetAdminReport(AdminRequestParams parameters)
         {
             return Ok(await documentService.GetAdminReport(parameters));
         }
@@ -50,7 +50,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpPost("order")]
         //POST: api/Admin/order
-        public IActionResult GetAdminOrder(AdminOrderRequestParams parameters)
+        public IActionResult GetAdminOrder(AdminRequestParams parameters)
         {
             return Ok(documentService.GetAdminOrder(parameters));
         }

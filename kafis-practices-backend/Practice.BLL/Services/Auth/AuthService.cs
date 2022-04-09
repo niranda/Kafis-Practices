@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Practice.Application.DTOs.Login;
+using Practice.Application.Services.Encryption;
 using Practice.Application.Services.Token;
+using Practice.Application.Settings;
 using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Entities;
 using System;
@@ -12,15 +14,13 @@ namespace Practice.Application.Services.Auth
     {
         private readonly ITokenService tokenService;
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly EncryptionSettings _encryptionSettings;
 
-        public AuthService(ITokenService tokenService, UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<Role> roleManager)
+        public AuthService(ITokenService tokenService, UserManager<User> userManager, EncryptionSettings encryptionSettings)
         {
             this.tokenService = tokenService;
             _userManager = userManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
+            _encryptionSettings = encryptionSettings;
         }
 
         public async Task<AuthResultDTO> Login(AuthDTO model)
@@ -32,9 +32,9 @@ namespace Practice.Application.Services.Auth
 
             if (user != null)
             {
-                var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+                var result = EncryptionService.DecryptString(user.PasswordHash, _encryptionSettings.Key) == model.Password;
 
-                if (result.Succeeded)
+                if (result)
                 {
                     return new AuthResultDTO
                     {

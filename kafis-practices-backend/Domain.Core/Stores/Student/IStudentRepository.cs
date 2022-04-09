@@ -14,8 +14,8 @@ namespace Practice.Domain.Core.Stores.StudentN
         Task<Student> GetByUserId(Guid userId);
         Task<IEnumerable<Student>> GetAllWithCredentials(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel, string sortBy, SortDirection? sortDirection);
         Task<IEnumerable<Student>> GetAll(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel, string sortBy, SortDirection? sortDirection);
-        Task<IEnumerable<Student>> GetBySearchParams(int year, GradeLevelEnum gradeLevel);
-        IQueryable<Student> GetStudentsForOrder(DegreeLevelEnum degreeLevel, string specialty);
+        Task<IEnumerable<Student>> GetBySearchParams(AcademicYear academicYear, GradeLevelEnum gradeLevel, string specialty);
+        IQueryable<Student> GetStudentsForOrder(DegreeLevelEnum degreeLevel, string specialty, AcademicYear academicYear);
         Task<IEnumerable<string>> GetAllSpecialtiesByYearAndGradeLevel(int year, GradeLevelEnum gradeLevel);
         Task<IEnumerable<string>> GetSpecialtiesByDegreeLevel(DegreeLevelEnum degreeLevel);
         Task<Student> Create(Student student);

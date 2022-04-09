@@ -12,5 +12,6 @@ namespace Practice.Domain.Core.Entities
     {
         public AcademicYear AcademicYear { get; set; }
         public GradeLevelEnum GradeLevel { get; set; }
+        public DegreeLevelEnum DegreeLevel { get; set; }
     }
 }

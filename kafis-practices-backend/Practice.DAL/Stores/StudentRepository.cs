@@ -54,21 +54,43 @@ namespace Practice.Infrastructure.Stores
                 sortBy, sortDirection);
         }
 
-        public async Task<IEnumerable<Student>> GetBySearchParams(int year, GradeLevelEnum gradeLevel)
+        public async Task<IEnumerable<Student>> GetBySearchParams(AcademicYear year, GradeLevelEnum gradeLevel, string specialty)
         {
-            return await context.Students.AsNoTracking().Include(s => s.Organization)
-                .Where(s => s.Year == year && s.Run.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync();
+            return await context.Students
+                .AsNoTracking()
+                .Include(s => s.Organization)
+                .Include(s => s.Run)
+                    .ThenInclude(y => y.AcademicYear)
+                .Where(s => !s.IsDeleted &&
+                            s.Run.AcademicYear.StartDate == year.StartDate && s.Run.AcademicYear.EndDate == year.EndDate &&
+                            s.Run.GradeLevel == gradeLevel && 
+                            s.Specialty == specialty)
+                .ToListAsync();
         }
 
-        public IQueryable<Student> GetStudentsForOrder(DegreeLevelEnum degreeLevel, string specialty)
+        public IQueryable<Student> GetStudentsForOrder(DegreeLevelEnum degreeLevel, string specialty, AcademicYear year)
         {
             if (degreeLevel == DegreeLevelEnum.Bachelor)
-                return context.Students.AsNoTracking().Include(s => s.Organization).Include(s => s.Teacher).Include(s => s.PracticeDates)
-                .Where(s => (s.Run.GradeLevel == GradeLevelEnum.FirstFull || s.Run.GradeLevel == GradeLevelEnum.FirstReduced)
-                    && s.Specialty == specialty && s.Organization != null && !s.IsDeleted);
+                return context.Students
+                    .AsNoTracking()
+                    .Include(s => s.Organization)
+                    .Include(s => s.Teacher)
+                    .Include(s => s.PracticeDates)
+                    .Include(s => s.Run)
+                        .ThenInclude(y => y.AcademicYear)
+                .Where(s => !s.IsDeleted && (s.Run.GradeLevel == GradeLevelEnum.FirstFull || s.Run.GradeLevel == GradeLevelEnum.FirstReduced)
+                    && s.Specialty == specialty && s.Organization != null &&  s.Run.AcademicYear.StartDate == year.StartDate 
+                    && s.Run.AcademicYear.EndDate == year.EndDate);
             else
-                return context.Students.AsNoTracking().Include(s => s.Organization).Include(s => s.Teacher).Include(s => s.PracticeDates)
-                .Where(s => s.Run.GradeLevel == GradeLevelEnum.Second && s.Specialty == specialty && s.Organization != null && !s.IsDeleted);
+                return context.Students
+                    .AsNoTracking()
+                    .Include(s => s.Organization)
+                    .Include(s => s.Teacher)
+                    .Include(s => s.PracticeDates)
+                    .Include(s => s.Run)
+                        .ThenInclude(x => x.AcademicYear)
+                .Where(s => !s.IsDeleted && s.Run.GradeLevel == GradeLevelEnum.Second && s.Specialty == specialty && 
+                s.Organization != null && s.Run.AcademicYear.StartDate == year.StartDate && s.Run.AcademicYear.EndDate == year.EndDate);
         }
 
         public async Task<IEnumerable<string>> GetAllSpecialtiesByYearAndGradeLevel(int year, GradeLevelEnum gradeLevel)

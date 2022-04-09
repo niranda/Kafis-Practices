@@ -57,7 +57,7 @@ namespace Practice.WebAPI
             string teacherPassword = EncryptionService.EncryptString("Bb123456", settings.Key);
 
             string studentUserName = "SmallestDaddy";
-            string studentPassword = EncryptionService.EncryptString("123456", settings.Key);
+            string studentPassword = EncryptionService.EncryptString("Cc123456", settings.Key);
 
             if (await roleManager.FindByNameAsync(RoleNameConstants.Admin) == null)
             {
