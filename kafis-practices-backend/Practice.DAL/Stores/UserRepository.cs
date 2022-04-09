@@ -4,6 +4,8 @@ using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Stores.UserN;
 using Practice.Infrastructure.Context;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Practice.Infrastructure.Stores
@@ -37,6 +39,11 @@ namespace Practice.Infrastructure.Stores
         {
             var userRole = await roleManager.FindByNameAsync(role);
             return userRole.Id;
+        }
+
+        public IEnumerable<User> GetAllUserByIds(IEnumerable<Guid> ids)
+        {
+            return context.Users.Where(x => ids.Any(i => i == x.Id)).ToList();
         }
     }
 }

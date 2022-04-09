@@ -8,7 +8,6 @@ namespace Practice.Application.Models.Admin
     {
         public int Year { get; set; }
         public GradeLevelEnum GradeLevel { get; set; }
-        public string Specialty { get; set; }
 
         public int OrganizationsAmount { get; set; }
         public IEnumerable<string> OrganizationsNames { get; set; }

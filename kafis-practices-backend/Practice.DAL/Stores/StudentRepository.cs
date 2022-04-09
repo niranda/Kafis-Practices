@@ -2,6 +2,7 @@
 using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Stores.StudentN;
+using Practice.Domain.Models;
 using Practice.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
@@ -32,22 +33,31 @@ namespace Practice.Infrastructure.Stores
             return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).Where(s => s.UserId == userId).SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Student>> GetAll(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel)
+        public async Task<IEnumerable<Student>> GetAll(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel, string sortBy, SortDirection? sortDirection)
         {
-            return await context.Students.AsNoTracking().Include(s => s.Teacher).Include(s => s.Organization).Include(s => s.PracticeDates).Include(s => s.Run)
-                .Where(s => s.Run.AcademicYear.StartDate == startDate && s.Run.AcademicYear.EndDate == endTime && s.Run.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync();
+            return Sort(await context.Students
+                .AsNoTracking()
+                .Include(s => s.Teacher)
+                .Include(s => s.Organization)
+                .Include(s => s.PracticeDates)
+                .Include(s => s.Run)
+                .Where(s => s.Run.AcademicYear.StartDate == startDate && s.Run.AcademicYear.EndDate == endTime && s.Run.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync(),
+                sortBy, sortDirection);
         }
 
-        public async Task<IEnumerable<Student>> GetAllWithCredentials(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel)
+        public async Task<IEnumerable<Student>> GetAllWithCredentials(DateTime startDate, DateTime endTime, GradeLevelEnum gradeLevel, string sortBy, SortDirection? sortDirection)
         {
-            return await context.Students.AsNoTracking().Include(s => s.User)
-                .Where(s => s.Run.AcademicYear.StartDate == startDate && s.Run.AcademicYear.EndDate == endTime && s.Run.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync();
+            return Sort(await context.Students
+                .AsNoTracking()
+                .Include(s => s.User)
+                .Where(s => s.Run.AcademicYear.StartDate == startDate && s.Run.AcademicYear.EndDate == endTime && s.Run.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync(),
+                sortBy, sortDirection);
         }
 
-        public async Task<IEnumerable<Student>> GetBySearchParams(int year, GradeLevelEnum gradeLevel, string specialty)
+        public async Task<IEnumerable<Student>> GetBySearchParams(int year, GradeLevelEnum gradeLevel)
         {
             return await context.Students.AsNoTracking().Include(s => s.Organization)
-                .Where(s => s.Year == year && s.Run.GradeLevel == gradeLevel && s.Specialty == specialty && !s.IsDeleted).ToListAsync();
+                .Where(s => s.Year == year && s.Run.GradeLevel == gradeLevel && !s.IsDeleted).ToListAsync();
         }
 
         public IQueryable<Student> GetStudentsForOrder(DegreeLevelEnum degreeLevel, string specialty)
@@ -117,6 +127,33 @@ namespace Practice.Infrastructure.Stores
 
             await context.SaveChangesAsync();
             return true;
+        }
+
+        private IEnumerable<Student> Sort(List<Student> students, string sortBy, SortDirection? sortDirection)
+        {
+            if(sortBy == null)
+            {
+                sortBy = "GROUP";
+            }
+
+            if(sortDirection == null)
+            {
+                sortDirection = SortDirection.DESC;
+            }
+
+            return (sortBy.ToUpperInvariant(), sortDirection) switch
+            {
+                ("GROUP", SortDirection.ASC) => students.OrderBy(x => x.GroupCode),
+                ("GROUP", SortDirection.DESC) => students.OrderByDescending(x => x.GroupCode),
+                ("SPECIALIZATION", SortDirection.ASC) => students.OrderBy(x => x.Specialization),
+                ("SPECIALIZATION", SortDirection.DESC) => students.OrderByDescending(x => x.Specialization),
+                ("TEACHER", SortDirection.ASC) => students.OrderBy(x => x.Teacher.FullName),
+                ("TEACHER", SortDirection.DESC) => students.OrderByDescending(x => x.Teacher.FullName),
+                ("PRACTICEDATES", SortDirection.ASC) => students.OrderBy(x => x.PracticeDates?.StartDate),
+                ("PRACTICEDATES", SortDirection.DESC) => students.OrderByDescending(x => x.PracticeDates?.StartDate),
+
+                _ => students
+            };
         }
     }
 }

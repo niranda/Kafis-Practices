@@ -146,6 +146,45 @@ namespace Practice.Infrastructure.Migrations
                     b.ToTable("AcademicYear");
                 });
 
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Manager", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("OrganizationId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Managers");
+                });
+
             modelBuilder.Entity("Practice.Domain.Core.Entities.Organization", b =>
                 {
                     b.Property<Guid>("Id")
@@ -161,6 +200,9 @@ namespace Practice.Infrastructure.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<Guid>("ManagerId")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("datetime(6)");
@@ -230,7 +272,7 @@ namespace Practice.Infrastructure.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Practice.Domain.Core.Entities.Student", b =>
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Run", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -242,14 +284,41 @@ namespace Practice.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("GradeLevel")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("TeacherId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcademicYearId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Runs");
+                });
+
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Student", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("Grade")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GradeLevel")
                         .HasColumnType("int");
 
                     b.Property<string>("GroupCode")
@@ -271,6 +340,9 @@ namespace Practice.Infrastructure.Migrations
                     b.Property<string>("ReportFileName")
                         .HasColumnType("longtext");
 
+                    b.Property<Guid?>("RunId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("Specialization")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
@@ -290,11 +362,11 @@ namespace Practice.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AcademicYearId");
-
                     b.HasIndex("OrganizationId");
 
                     b.HasIndex("PracticeDatesId");
+
+                    b.HasIndex("RunId");
 
                     b.HasIndex("TeacherId");
 
@@ -457,21 +529,40 @@ namespace Practice.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Practice.Domain.Core.Entities.Manager", b =>
+                {
+                    b.HasOne("Practice.Domain.Core.Entities.Organization", "Organization")
+                        .WithOne("Manager")
+                        .HasForeignKey("Practice.Domain.Core.Entities.Manager", "OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Practice.Domain.Core.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Practice.Domain.Core.Entities.Run", b =>
                 {
                     b.HasOne("Practice.Domain.Core.Entities.AcademicYear", "AcademicYear")
                         .WithMany()
                         .HasForeignKey("AcademicYearId");
 
+                    b.HasOne("Practice.Domain.Core.Entities.Teacher", null)
+                        .WithMany("Runs")
+                        .HasForeignKey("TeacherId");
+
                     b.Navigation("AcademicYear");
                 });
 
             modelBuilder.Entity("Practice.Domain.Core.Entities.Student", b =>
                 {
-                    b.HasOne("Practice.Domain.Core.Entities.AcademicYear", "AcademicYear")
-                        .WithMany()
-                        .HasForeignKey("AcademicYearId");
-
                     b.HasOne("Practice.Domain.Core.Entities.Organization", "Organization")
                         .WithMany("Students")
                         .HasForeignKey("OrganizationId");
@@ -479,6 +570,10 @@ namespace Practice.Infrastructure.Migrations
                     b.HasOne("Practice.Domain.Core.Entities.PracticeDates", "PracticeDates")
                         .WithMany()
                         .HasForeignKey("PracticeDatesId");
+
+                    b.HasOne("Practice.Domain.Core.Entities.Run", "Run")
+                        .WithMany()
+                        .HasForeignKey("RunId");
 
                     b.HasOne("Practice.Domain.Core.Entities.Teacher", "Teacher")
                         .WithMany("Students")
@@ -490,11 +585,11 @@ namespace Practice.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AcademicYear");
-
                     b.Navigation("Organization");
 
                     b.Navigation("PracticeDates");
+
+                    b.Navigation("Run");
 
                     b.Navigation("Teacher");
 
@@ -525,11 +620,15 @@ namespace Practice.Infrastructure.Migrations
 
             modelBuilder.Entity("Practice.Domain.Core.Entities.Organization", b =>
                 {
+                    b.Navigation("Manager");
+
                     b.Navigation("Students");
                 });
 
             modelBuilder.Entity("Practice.Domain.Core.Entities.Teacher", b =>
                 {
+                    b.Navigation("Runs");
+
                     b.Navigation("Students");
                 });
 #pragma warning restore 612, 618

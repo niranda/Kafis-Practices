@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Practice.BLL\Practice.Application.csproj" />
     <ProjectReference Include="..\Practice.DAL\Practice.Infrastructure.csproj" />
+    <ProjectReference Include="..\Practice.MailServices\Practice.MailServices.csproj" />
     <ProjectReference Include="..\UtilityServices\Practice.UtilityServices.csproj" />
   </ItemGroup>
 
