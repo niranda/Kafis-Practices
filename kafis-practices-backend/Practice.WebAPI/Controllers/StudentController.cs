@@ -4,13 +4,11 @@ using Practice.Application.DTOs.User.Student;
 using Practice.Application.Models;
 using Practice.Application.Services.StudentN;
 using Practice.Domain.Core.Common.Constants;
-using Practice.Application.Models.StudentN;
 using Practice.Domain.Core.Common.Enums;
 using Practice.WebAPI.Filters;
 using Practice.WebAPI.Models;
 using System;
 using System.Threading.Tasks;
-using Practice.Domain.Models;
 
 namespace Practice.WebAPI.Controllers
 {
@@ -71,7 +69,7 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpPost("specialties")]
         //POST: api/Student/specialties
-        public async Task<IActionResult> GetSpecialtiesByParams(SpecialtiesRequestParams parameters)
+        public async Task<IActionResult> GetSpecialtiesByParams(RunRequestParams parameters)
         {
             return Ok(await studentService.GetSpecialtiesBySearchParams(parameters));
         }
@@ -79,9 +77,9 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpPost("specialtiesByDegree")]
         //POST: api/Student/specialtiesByDegree
-        public async Task<IActionResult> GetSpecialtiesByDegree(DegreeLevelEnum degreeLevel)
+        public async Task<IActionResult> GetSpecialtiesByDegree(GradeLevelEnum gradeLevel)
         {
-            return Ok(await studentService.GetSpecialtiesByDegreeLevel(degreeLevel));
+            return Ok(await studentService.GetSpecialtiesByDegreeLevel(gradeLevel));
         }
 
         [Authorize(Roles = RoleNameConstants.Teacher)]

@@ -28,7 +28,12 @@ namespace Practice.Application.Services.Document
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
 
-            var students = (await studentRepository.GetBySearchParams(parameters.Run.AcademicYear, parameters.Run.GradeLevel, parameters.Specialty)).ToList();
+            var students = (await studentRepository.GetBySearchParams(
+                parameters.StartDate,
+                parameters.EndDate,
+                parameters.GradeLevel,
+                parameters.Specialty))
+                .ToList();
 
             if (students == null || !students.Any())
                 throw new StudentNotFoundException();
@@ -84,8 +89,9 @@ namespace Practice.Application.Services.Document
 
             return new AdminReportResponse
             {
-                GradeLevel = parameters.Run.GradeLevel,
-                AcademicYear = parameters.Run.AcademicYear,
+                GradeLevel = parameters.GradeLevel,
+                StartDate = students.FirstOrDefault().PracticeDates.StartDate.Value,
+                EndDate = students.FirstOrDefault().PracticeDates.EndDate.Value,
                 AllStudentsAmount = allStudentsAmount,
                 SuccessfulStudentsAmount = successfulStudentsAmount,
                 FailedStudentsAmount = failedStudentsAmount,
@@ -96,12 +102,17 @@ namespace Practice.Application.Services.Document
         }
         public IEnumerable<AdminOrderResponse> GetAdminOrder(AdminRequestParams parameters)
         {
-            var students = studentRepository.GetStudentsForOrder(parameters.Run.DegreeLevel, parameters.Specialty, parameters.Run.AcademicYear);
+            var students = studentRepository.GetStudentsForOrder(
+                parameters.Specialty,
+                parameters.StartDate,
+                parameters.EndDate,
+                parameters.GradeLevel)
+                .ToList();
 
             if (students == null || !students.Any())
                 throw new StudentNotFoundException();
 
-            var groupedStudentOrders = students.AsEnumerable().GroupBy(s => new { s.Run.GradeLevel, s.Organization.Name }, (key, group) =>
+            var groupedStudentOrders = students.GroupBy(s => new { s.PracticeDates.GradeLevel, s.Organization.Name }, (key, group) =>
                 new StudentOrder { GradeLevel = key.GradeLevel, OrganizationName = key.Name, Students = group.ToList() })
                     .GroupBy(s => new { s.GradeLevel }, (key, group) => new GroupedStudentOrder { GradeLevel = key.GradeLevel, StudentOrders = group.ToList() }).ToList();
 
@@ -113,7 +124,6 @@ namespace Practice.Application.Services.Document
                 {
                     GradeLevel = g.GradeLevel,
                     Specialty = g.StudentOrders.First().Students.First().Specialty,
-                    Year = g.StudentOrders.First().Students.First().Year,
                     Specialization = g.StudentOrders.First().Students.First().Specialization,
                     StartDate = g.StudentOrders.First().Students.First().PracticeDates.StartDate,
                     EndDate = g.StudentOrders.First().Students.First().PracticeDates.EndDate,
