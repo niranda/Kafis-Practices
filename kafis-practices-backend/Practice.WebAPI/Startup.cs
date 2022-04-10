@@ -114,9 +114,10 @@ namespace Practice.WebAPI
 
             app.AddMiddleware();
 
+            app.ProcessJwt();
+
             app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -33,6 +34,17 @@ namespace Practice.WebAPI.Configs
                     RequireExpirationTime = false,
                     ValidateLifetime = true
                 };
+            });
+        }
+        public static void ProcessJwt(this IApplicationBuilder app)
+        {
+            app.Use(async (context, next) =>
+            {
+                var token = context.Request.Cookies["Token"];
+                if (!string.IsNullOrEmpty(token) && !context.Request.Headers.ContainsKey("Token"))
+                    context.Request.Headers.Add("Authorization", "Bearer " + token);
+
+                await next();
             });
         }
     }
