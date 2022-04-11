@@ -17,6 +17,9 @@ import { AppComponent } from './app.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { appInitializerFactory } from '@practice/utils';
+import {MaterialModule} from 'apps/practice-ui-admin/src/app/features/shared/date-gradelevel-select-dialog.module';
+
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +44,7 @@ import { appInitializerFactory } from '@practice/utils';
     MatDialogModule,
     MatButtonModule,
     MatRippleModule,
+    MaterialModule
   ],
   providers: [{
     provide: APP_INITIALIZER,

@@ -6,6 +6,9 @@ import { takeUntil } from 'rxjs/operators';
 import { AuthService } from '@practice/feature-login';
 import { UserRoles } from '@practice/enums';
 
+import {MatDialog} from '@angular/material/dialog';
+import {DateGradeSelectDialog} from 'apps/practice-ui-admin/src/app/features/shared/date-gradelevel-select-dialog.component';
+
 @Component({
   selector: 'admin-auth',
   templateUrl: './auth.component.html',
@@ -18,13 +21,19 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private router: Router,
+    public dialog: MatDialog,
   ) { }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DateGradeSelectDialog);
+  }
 
   public ngOnInit(): void {
     this.authService.succesfullSignIn$.pipe(
       takeUntil(this.destroy$),
     ).subscribe(() => {
-      this.router.navigate(['']);
+      this.router.navigate([''],);
+      this.openDialog();
     });
   }
 
