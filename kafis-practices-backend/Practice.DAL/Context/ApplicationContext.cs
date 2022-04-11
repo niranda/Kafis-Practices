@@ -18,7 +18,6 @@ namespace Practice.Infrastructure.Context
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<PracticeDates> PracticeDates { get; set; }
-        public DbSet<Run> Runs { get; set; }
         public DbSet<Manager> Managers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

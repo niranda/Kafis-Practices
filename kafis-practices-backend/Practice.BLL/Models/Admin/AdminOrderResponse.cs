@@ -7,7 +7,6 @@ namespace Practice.Application.Models.Admin
 {
     public class AdminOrderResponse
     {
-        public int Year { get; set; }
         public GradeLevelEnum GradeLevel { get; set; }
         public string Specialty { get; set; }
         public string Specialization { get; set; }

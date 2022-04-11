@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Practice.Application.DTOs.Attorney;
-using Practice.Application.DTOs.User.Student;
 using Practice.Application.Models.Admin;
 using Practice.Application.Services.Document;
 using Practice.Application.Services.OrganizationN;

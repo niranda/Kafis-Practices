@@ -9,11 +9,9 @@ using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Common.Exceptions;
 using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Stores.File.FileUploadN;
-using Practice.Application.Models.StudentN;
 using Practice.Domain.Core.Stores.Practice;
 using Practice.Domain.Core.Stores.StudentN;
 using Practice.Domain.Core.Stores.TeacherN;
-using Practice.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +58,7 @@ namespace Practice.Application.Services.StudentN
 
             studentDTO.UserId = await userService.CreateUser(RoleNameConstants.Student);
 
-            studentDTO.PracticeDatesId = (await practiceDatesRepository.GetByGradeLevel(studentDTO.Run.GradeLevel)).Id;
+            studentDTO.PracticeDatesId = (await practiceDatesRepository.GetByGradeLevel(studentDTO.PracticeDates.GradeLevel)).Id;
 
             var student = mapper.Map<Student>(studentDTO);
             var addedStudent = mapper.Map<StudentDTO>(await studentRepository.Create(student));
@@ -98,14 +96,14 @@ namespace Practice.Application.Services.StudentN
                 (parameters.StartDate, parameters.EndDate, parameters.GradeLevel, parameters.SortBy, parameters.SortDirection));
         }
 
-        public async Task<IEnumerable<string>> GetSpecialtiesBySearchParams(SpecialtiesRequestParams parameters)
+        public async Task<IEnumerable<string>> GetSpecialtiesBySearchParams(RunRequestParams parameters)
         {
-            return await studentRepository.GetAllSpecialtiesByYearAndGradeLevel(parameters.Year, parameters.GradeLevel);
+            return await studentRepository.GetAllSpecialtiesByYearAndGradeLevel(parameters.StartDate, parameters.EndDate, parameters.GradeLevel);
         }
 
-        public async Task<IEnumerable<string>> GetSpecialtiesByDegreeLevel(DegreeLevelEnum degreeLevel)
+        public async Task<IEnumerable<string>> GetSpecialtiesByDegreeLevel(GradeLevelEnum gradeLevel)
         {
-            return await studentRepository.GetSpecialtiesByDegreeLevel(degreeLevel);
+            return await studentRepository.GetSpecialtiesByGradeLevel(gradeLevel);
         }
 
         public async Task<StudentDTO> UpdateStudentGrade(Guid id, int grade)
@@ -153,7 +151,7 @@ namespace Practice.Application.Services.StudentN
                 };
             }
 
-            var practiceDates = mapper.Map<PracticeDatesDTO>(await practiceDatesRepository.GetByGradeLevel(studentDTO.Run.GradeLevel));
+            var practiceDates = mapper.Map<PracticeDatesDTO>(await practiceDatesRepository.GetByGradeLevel(studentDTO.PracticeDates.GradeLevel));
             studentDTO.PracticeDatesId = practiceDates.Id;
             studentDTO.PracticeDates = practiceDates;
 

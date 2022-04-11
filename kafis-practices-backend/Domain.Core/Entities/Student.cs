@@ -1,5 +1,4 @@
-﻿using Practice.Domain.Core.Common.Enums;
-using Practice.Domain.Core.Entities.Base;
+﻿using Practice.Domain.Core.Entities.Base;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,28 +7,9 @@ namespace Practice.Domain.Core.Entities
 {
     public class Student : BaseEntity
     {
-        private int _year;
-
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string FullName { get; set; }
-        [Required]
-        [Range(1, 6)]
-        public int Year
-        {
-            get
-            {
-                return _year;
-            }
-            set
-            {
-                if (value != 2 && value != 4)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                _year = value;
-            }
-        }
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string Specialty { get; set; }
@@ -53,6 +33,5 @@ namespace Practice.Domain.Core.Entities
         public Teacher Teacher { get; set; }
         public Organization Organization { get; set; }
         public PracticeDates PracticeDates { get; set; }
-        public Run Run { get; set; }
     }
 }

@@ -1,7 +1,5 @@
-﻿using Practice.Domain.Core.Common.Enums;
-using Practice.Domain.Core.Entities.Base;
+﻿using Practice.Domain.Core.Entities.Base;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Practice.Domain.Core.Entities
 {

@@ -2,7 +2,7 @@
 
 namespace Practice.Infrastructure.Migrations
 {
-    public partial class Practicies : Migration
+    public partial class AddPracticeDates : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

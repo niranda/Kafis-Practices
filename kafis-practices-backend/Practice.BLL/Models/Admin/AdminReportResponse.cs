@@ -1,13 +1,14 @@
 ﻿using Practice.Application.Models.StudentN;
 using Practice.Domain.Core.Common.Enums;
-using Practice.Domain.Core.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Practice.Application.Models.Admin
 {
     public class AdminReportResponse
     {
-        public AcademicYear AcademicYear { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public GradeLevelEnum GradeLevel { get; set; }
 
         public int OrganizationsAmount { get; set; }
