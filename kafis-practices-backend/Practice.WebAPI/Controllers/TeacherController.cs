@@ -46,15 +46,15 @@ namespace Practice.WebAPI.Controllers
         }
 
         [Authorize(Roles = RoleNameConstants.Admin)]
-        [HttpGet]
-        //GET: api/Teacher
+        [HttpPost("all")]
+        //GET: api/Teachers/all
         public async Task<IActionResult> GetTeachers()
         {
             return Ok(await teacherService.GetAllTeachers());
         }
 
         [Authorize(Roles = RoleNameConstants.Admin)]
-        [HttpGet("credentials")]
+        [HttpPost("credentials")]
         //GET: api/Teacher/credentials
         public async Task<IActionResult> GetTeachersWithCredentials()
         {
