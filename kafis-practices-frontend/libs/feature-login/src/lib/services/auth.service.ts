@@ -36,6 +36,7 @@ export class AuthService {
   public logout(): void {
     this.cookie.delete('Token', '/');
     this.router.navigate(['/auth']);
+    localStorage.clear();
   }
 
   public login(user: UserAuthModel): Observable<UserResponse> {

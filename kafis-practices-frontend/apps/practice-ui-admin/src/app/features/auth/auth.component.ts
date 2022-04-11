@@ -24,16 +24,13 @@ export class AuthComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
   ) { }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DateGradeSelectDialog);
-  }
 
   public ngOnInit(): void {
     this.authService.succesfullSignIn$.pipe(
       takeUntil(this.destroy$),
     ).subscribe(() => {
       this.router.navigate([''],);
-      this.openDialog();
+      this.dialog.open(DateGradeSelectDialog);
     });
   }
 

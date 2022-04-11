@@ -3,11 +3,18 @@
   <mat-label>
     Рік початку практики:
   </mat-label>
-  <input matInput type="number" (input)="inputHandlerStart($event)" formControlName="start">
+  <mat-form-field appearance="fill">
+    <mat-label></mat-label>
+    <input matInput type="number" (input)="inputHandlerStart($event)" formControlName="start"/>
+  </mat-form-field>
 <mat-label>
     Рік закінчення практики:
   </mat-label>
-  <input matInput type="number" (input)="inputHandlerEnd($event)" formControlName="end">
+  <mat-form-field appearance="fill">
+    <mat-label></mat-label>
+    <input matInput type="number" (input)="inputHandlerEnd($event)" formControlName="end"/>
+  </mat-form-field>
+  
   <mat-form-field appearance="fill">
     <mat-label>Рівень навчання</mat-label>
     <mat-select>
@@ -16,5 +23,6 @@
       <mat-option value="3" (click)="changeGradeLevel(1)">другий (магістерський)</mat-option>
     </mat-select>
   </mat-form-field>
-<button mat-button disabled="{{range.invalid}}" color="primary">Пошук</button>
+  <button mat-button color="primary" (click)="cancel()">Скасувати</button>
+<button mat-button disabled="{{range.invalid}}" color="primary" (click)="submit()">Пошук</button>
 </form>

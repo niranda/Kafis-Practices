@@ -8,6 +8,8 @@ import { JWTService } from '@practice/feature-login';
 import { AuthService } from '@practice/feature-login';
 import { routingAnimation } from '@practice/ui/components/ui-elements';
 import { LogoutConfirmationDialogComponent } from '@practice/ui/components/dialogs';
+import {DateGradeSelectDialog} from 'apps/practice-ui-admin/src/app/features/shared/date-gradelevel-select-dialog.component';
+
 
 @Component({
   selector: 'practice-root',
@@ -32,7 +34,9 @@ export class AppComponent {
   public getAnimationData(outlet: RouterOutlet): string | null {
     return outlet.activatedRouteData.state ? outlet.activatedRouteData.state : null;
   }
-
+  openDialog(): void{
+    this.dialog.open(DateGradeSelectDialog);
+  }
   public onLogout(): void {
     this.dialog.open(LogoutConfirmationDialogComponent);
   }
