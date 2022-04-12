@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { environment } from '@practice/environment';
 import { convertToHttpParams } from '@practice/utils';
 import {
@@ -11,6 +11,7 @@ import {
   AdminOrderResponse,
   AdminOrderRequestParams
 } from '@practice/interfaces';
+import { AdminRequestParams } from '../models/run-request-model copy';
 
 const practiceDatesApiRequest = environment.API.practiceDates;
 const adminApiRequest = environment.API.admin;
@@ -18,12 +19,18 @@ const adminApiRequest = environment.API.admin;
 @Injectable({
   providedIn: 'root'
 })
-export class AdminSettingsService {
+export class AdminSettingsService implements OnInit {
 
   constructor(
     private http: HttpClient
   ) { }
-
+  ngOnInit(): void {
+      this.adminRequestParms.startDate=parseInt(localStorage.getItem('startDate'));
+      this.adminRequestParms.endDate=parseInt(localStorage.getItem('endDate'));
+      this.adminRequestParms.gradeLevel=parseInt(localStorage.getItem('startDate'));
+      this.adminRequestParms.specialty=localStorage.getItem('specialty');
+  }
+  adminRequestParms: AdminRequestParams = new AdminRequestParams();
   public getDates(): Observable<PracticeDates[]> {
     return this.http.get<PracticeDates[]>(`${practiceDatesApiRequest}`, { withCredentials: true });
   }
@@ -45,11 +52,11 @@ export class AdminSettingsService {
     return this.http.get<void>(`${adminApiRequest}/updateAttorney`, { params, withCredentials: true });
   }
 
-  public getReportData(requestBody: AdminReportRequestParams): Observable<AdminReportResponse> {
+  public getReportData(requestBody: AdminRequestParams): Observable<AdminReportResponse> {
     return this.http.post<AdminReportResponse>(`${adminApiRequest}/report`, requestBody, { withCredentials: true });
   }
 
-  public getOrderData(requestBody: AdminOrderRequestParams): Observable<AdminOrderResponse[]> {
+  public getOrderData(requestBody: AdminRequestParams): Observable<AdminOrderResponse[]> {
     return this.http.post<AdminOrderResponse[]>(`${adminApiRequest}/order`, requestBody, { withCredentials: true });
   }
 

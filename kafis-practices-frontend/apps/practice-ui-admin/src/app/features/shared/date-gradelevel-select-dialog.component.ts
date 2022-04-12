@@ -25,12 +25,7 @@ import { start } from 'repl';
         return 'Ви повинні вписати значення';       
   }
 changeGradeLevel(num: number){
-  let localGradeLevel: GradeLevel;
-  if(num===1){localGradeLevel=GradeLevel.FirstFull}
-  if(num===2){localGradeLevel=GradeLevel.FirstReduced}
-  if(num===3){localGradeLevel=GradeLevel.Second}
-  this.range.get('gradeLevel').setValue(localGradeLevel);
-  
+  this.range.get('gradeLevel').setValue(num);
 }
 
 inputHandlerStart(event: any){
@@ -41,8 +36,8 @@ inputHandlerEnd(event: any){
 }
 
 submit(){
-localStorage.setItem('start',this.range.get('start').value);
-localStorage.setItem('end',this.range.get('end').value);
+localStorage.setItem('startDate',this.range.get('start').value);
+localStorage.setItem('endDate',this.range.get('end').value);
 localStorage.setItem('gradeLevel',this.range.get('gradeLevel').value);
 this.dialogRef.close();
 }

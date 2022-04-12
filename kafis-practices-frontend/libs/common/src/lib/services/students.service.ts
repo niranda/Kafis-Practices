@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -7,16 +7,22 @@ import { environment } from '@practice/environment';
 import { Student, User, UpdateStudentResult, AddStudentResult, SpecialtiesRequestParams } from '@practice/interfaces';
 import { DegreeLevel, GradeLevel } from '@practice/enums';
 import { convertToHttpParams } from '@practice/utils';
+import { RunRequestParams } from '../models/run-request-model';
 
 const studentApiRequest = environment.API.student;
 
 @Injectable()
-export class StudentsService {
+export class StudentsService implements OnInit {
 
   constructor(
     private http: HttpClient,
     private translate: TranslateService,) { }
-
+    runRequestParams: RunRequestParams=new RunRequestParams();
+   ngOnInit(){
+     this.runRequestParams.startDate=parseInt(localStorage.getItem('startDate'));
+     this.runRequestParams.endDate=parseInt(localStorage.getItem('endDate'));
+     this.runRequestParams.gradeLevel=parseInt(localStorage.getItem('gradeLevel'));
+   }
   public getStudentById(id: number): Observable<Student> {
     return this.http.get<Student>(`${studentApiRequest}/${id}`, { withCredentials: true });
   }
@@ -27,11 +33,11 @@ export class StudentsService {
   }
 
   public getStudents(): Observable<Student[]> {
-    return this.http.get<Student[]>(`${studentApiRequest}`, { withCredentials: true });
+    return this.http.post<Student[]>(`${studentApiRequest}/all`,this.runRequestParams, { withCredentials: true });
   }
 
   public getStudentsWithCredentials(): Observable<User[]> {
-    return this.http.get<User[]>(`${studentApiRequest}/credentials`, { withCredentials: true });
+    return this.http.post<User[]>(`${studentApiRequest}/credentials`,this.runRequestParams, { withCredentials: true });
   }
 
   public createStudent(student: Student): Observable<AddStudentResult> {
@@ -72,11 +78,11 @@ export class StudentsService {
   }
 
   public getSpecialties(requestParams: SpecialtiesRequestParams): Observable<string[]> {
-    return this.http.post<string[]>(`${studentApiRequest}/specialties`, requestParams, { withCredentials: true });
+    return this.http.post<string[]>(`${studentApiRequest}/specialties`, this.runRequestParams, { withCredentials: true });
   }
 
   public getSpecialtiesByDegree(degreeLevel: DegreeLevel): Observable<string[]> {
     const params = convertToHttpParams({ degreeLevel })
-    return this.http.post<string[]>(`${studentApiRequest}/specialtiesByDegree`, {}, { withCredentials: true, params });
+    return this.http.post<string[]>(`${studentApiRequest}/specialtiesByDegree`, this.runRequestParams.gradeLevel, { withCredentials: true, params });
   }
 }

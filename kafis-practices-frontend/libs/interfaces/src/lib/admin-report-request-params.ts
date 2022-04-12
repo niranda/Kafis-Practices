@@ -1,7 +1,8 @@
 import { GradeLevel } from "@practice/enums"
 
 export interface AdminReportRequestParams {
-  year: number;
+  startDate: number;
+  endDate: number;
   gradeLevel: GradeLevel;
   specialty: string;
 }
