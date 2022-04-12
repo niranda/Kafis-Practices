@@ -8,22 +8,22 @@ import { JWTService } from '@practice/feature-login';
 import { AuthService } from '@practice/feature-login';
 import { routingAnimation } from '@practice/ui/components/ui-elements';
 import { LogoutConfirmationDialogComponent } from '@practice/ui/components/dialogs';
-import {DateGradeSelectDialog} from 'apps/practice-ui-admin/src/app/features/shared/date-gradelevel-select-dialog.component';
-
+import { DateGradeSelectDialog } from 'apps/practice-ui-admin/src/app/features/shared/date-gradelevel-select-dialog.component';
 
 @Component({
   selector: 'practice-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [routingAnimation]
+  animations: [routingAnimation],
 })
 export class AppComponent {
-
-  constructor(private translate: TranslateService,
-              private cookie: CookieService,
-              private jwt: JWTService,
-              private dialog: MatDialog,
-              public authService: AuthService) {
+  constructor(
+    private translate: TranslateService,
+    private cookie: CookieService,
+    private jwt: JWTService,
+    private dialog: MatDialog,
+    public authService: AuthService
+  ) {
     this.jwt.setToken(this.cookie.get('Token'));
 
     this.translate.addLangs(['uk']);
@@ -31,10 +31,25 @@ export class AppComponent {
     this.translate.use('uk');
   }
 
-  public getAnimationData(outlet: RouterOutlet): string | null {
-    return outlet.activatedRouteData.state ? outlet.activatedRouteData.state : null;
+  public ngDoCheck(): string {
+    if (
+      localStorage.getItem('startDate') == undefined ||
+      localStorage.getItem('endDate') == undefined
+    ) {
+      return 'Оберіть ран';
+    } else {
+      return `${localStorage.getItem('startDate')} - ${localStorage.getItem(
+        'endDate'
+      )}`;
+    }
   }
-  openDialog(): void{
+
+  public getAnimationData(outlet: RouterOutlet): string | null {
+    return outlet.activatedRouteData.state
+      ? outlet.activatedRouteData.state
+      : null;
+  }
+  openDialog(): void {
     this.dialog.open(DateGradeSelectDialog);
   }
   public onLogout(): void {
