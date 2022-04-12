@@ -105,7 +105,7 @@ namespace Practice.WebAPI
                     await userManager.AddToRoleAsync(superTeacher, RoleNameConstants.Teacher);
                 }
 
-                context.Teachers.Add(new Teacher { Id = Guid.NewGuid(), FullName = superTeacher.UserName, Position = "Mega", UserId = superTeacher.Id });
+                await context.Teachers.AddAsync(new Teacher { Id = Guid.NewGuid(), FullName = superTeacher.UserName, Position = "Mega", UserId = superTeacher.Id, PracticeDates = new PracticeDates { GradeLevel = GradeLevelEnum.FirstFull, StartDate = DateTime.Parse("2021-02-02"), EndDate = DateTime.Parse("2022.12.12") } });
                 await context.SaveChangesAsync();
             }
 

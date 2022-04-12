@@ -14,7 +14,11 @@ namespace Practice.Domain.Core.Entities
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string City { get; set; }
-        public Guid ManagerId { get; set; }
+
+        public Guid? ManagerId { get; set; }
+        public Guid? PracticeDatesId { get; set; }
+
+        public PracticeDates PracticeDates { get; set; }
         public IEnumerable<Student> Students { get; set; }
         public Manager Manager { get; set; }
     }

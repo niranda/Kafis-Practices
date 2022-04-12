@@ -16,6 +16,9 @@ namespace Practice.Domain.Core.Entities
         [Column(TypeName = "nvarchar(50)")]
         public string Position { get; set; }
 
+        public Guid? PracticeDatesId { get; set; }
+
+        public PracticeDates PracticeDates { get; set; }
         public User User { get; set; }
         public IEnumerable<Student> Students { get; set; }
     }

@@ -35,7 +35,6 @@ namespace Practice.Application.DTOs.User.Student
         public Guid? OrganizationId { get; set; }
         public Guid? UserId { get; set; }
         public Guid? PracticeDatesId { get; set; }
-        public Guid? RunId { get; set; }
 
 
         public TeacherDTO Teacher { get; set; }
