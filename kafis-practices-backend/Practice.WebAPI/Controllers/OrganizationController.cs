@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Practice.Application.DTOs.Organization;
+using Practice.Application.Models;
 using Practice.Application.Services.OrganizationN;
 using Practice.Domain.Core.Common.Constants;
 using Practice.WebAPI.Filters;
@@ -40,9 +41,9 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpGet]
         //GET: api/Organization
-        public async Task<IActionResult> GetOrganizations()
+        public async Task<IActionResult> GetOrganizations(RunRequestParams parameters)
         {
-            return Ok(await organizationService.GetAllOrganizations());
+            return Ok(await organizationService.GetAllOrganizations(parameters));
         }
 
         [Authorize(Roles = RoleNameConstants.Admin)]

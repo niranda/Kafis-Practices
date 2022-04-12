@@ -1,4 +1,5 @@
 ﻿using Practice.Application.DTOs.Base;
+using Practice.Application.DTOs.Practice;
 using Practice.Application.DTOs.User.Student;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,11 @@ namespace Practice.Application.DTOs.User.Teacher
     {
         public string FullName { get; set; }
         public string Position { get; set; }
+
         public Guid? UserId { get; set; }
+        public Guid? PracticeDatesId { get; set; }
+
+        public PracticeDatesDTO PracticeDates { get; set; }
         public IEnumerable<StudentDTO> Students { get; set; }
     }
 }

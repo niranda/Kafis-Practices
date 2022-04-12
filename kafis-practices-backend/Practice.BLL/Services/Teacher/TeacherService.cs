@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Practice.Application.DTOs.User.Teacher;
+using Practice.Application.Models;
 using Practice.Application.Services.UserN;
 using Practice.Domain.Core.Common.Constants;
 using Practice.Domain.Core.Common.Exceptions;
 using Practice.Domain.Core.Entities;
+using Practice.Domain.Core.Stores.Practice;
 using Practice.Domain.Core.Stores.TeacherN;
 using System;
 using System.Collections.Generic;
@@ -14,13 +16,16 @@ namespace Practice.Application.Services.TeacherN
     public class TeacherService : ITeacherService
     {
         private readonly ITeacherRepository teacherRepository;
+        private readonly IPracticeDatesRepository practiceDatesRepository;
         private readonly IMapper mapper;
         private readonly IUserService userService;
 
         public TeacherService(ITeacherRepository teacherRepository,
+                              IPracticeDatesRepository practiceDatesRepository, 
                               IMapper mapper,
                               IUserService userService)
         {
+            this.practiceDatesRepository = practiceDatesRepository;
             this.teacherRepository = teacherRepository;
             this.mapper = mapper;
             this.userService = userService;
@@ -32,6 +37,7 @@ namespace Practice.Application.Services.TeacherN
                 throw new ArgumentNullException(nameof(teacherDTO));
 
             teacherDTO.UserId = await userService.CreateUser(RoleNameConstants.Teacher);
+            teacherDTO.PracticeDatesId = (await practiceDatesRepository.GetByGradeLevel(teacherDTO.PracticeDates.GradeLevel)).Id;
 
             var teacher = mapper.Map<Teacher>(teacherDTO);
             return mapper.Map<TeacherDTO>(await teacherRepository.Create(teacher));
@@ -52,14 +58,14 @@ namespace Practice.Application.Services.TeacherN
             return mapper.Map<TeacherDTO>(await teacherRepository.GetByUserId(userId));
         }
 
-        public async Task<IEnumerable<TeacherDTO>> GetAllTeachers()
+        public async Task<IEnumerable<TeacherDTO>> GetAllTeachers(RunRequestParams parameters)
         {
-            return mapper.Map<IEnumerable<TeacherDTO>>(await teacherRepository.GetAll());
+            return mapper.Map<IEnumerable<TeacherDTO>>(await teacherRepository.GetAll(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
         }
 
-        public async Task<IEnumerable<TeacherUserDTO>> GetAllTeachersWithCredentials()
+        public async Task<IEnumerable<TeacherUserDTO>> GetAllTeachersWithCredentials(RunRequestParams parameters)
         {
-            return mapper.Map<IEnumerable<TeacherUserDTO>>(await teacherRepository.GetAllWithCredentials());
+            return mapper.Map<IEnumerable<TeacherUserDTO>>(await teacherRepository.GetAllWithCredentials(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
         }
 
         public async Task<TeacherDTO> UpdateTeacher(TeacherDTO teacherDTO)

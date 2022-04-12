@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Practice.Application.DTOs.Organization;
+using Practice.Application.Models;
 using Practice.Domain.Core.Common.Exceptions;
 using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Stores.OrganizationN;
@@ -39,9 +40,9 @@ namespace Practice.Application.Services.OrganizationN
             return mapper.Map<OrganizationDTO>(organization);
         }
 
-        public async Task<IEnumerable<OrganizationDTO>> GetAllOrganizations()
+        public async Task<IEnumerable<OrganizationDTO>> GetAllOrganizations(RunRequestParams parameters)
         {
-            return mapper.Map<IEnumerable<OrganizationDTO>>(await organizationRepository.GetAll());
+            return mapper.Map<IEnumerable<OrganizationDTO>>(await organizationRepository.GetAll(parameters.StartDate, parameters.EndDate, parameters.GradeLevel));
         }
 
         public async Task<OrganizationDTO> UpdateOrganization(OrganizationDTO organizationDTO)

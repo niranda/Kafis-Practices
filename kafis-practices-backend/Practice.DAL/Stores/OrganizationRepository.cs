@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Stores.OrganizationN;
 using Practice.Infrastructure.Context;
@@ -26,9 +27,17 @@ namespace Practice.Infrastructure.Stores
             return await context.Organizations.Include(o => o.Students.Where(s => !s.IsDeleted)).SingleOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<IEnumerable<Organization>> GetAll()
+        public async Task<IEnumerable<Organization>> GetAll(int startDate, int endDate, GradeLevelEnum gradeLevel)
         {
-            return await context.Organizations.AsNoTracking().Include(o => o.Students.Where(s => !s.IsDeleted)).Where(o => !o.IsDeleted).ToListAsync();
+            return await context.Organizations
+                .AsNoTracking()
+                .Include(o => o.Students.Where(s => !s.IsDeleted))
+                .Include(o => o.PracticeDates)
+                .Where(o => o.PracticeDates.StartDate.Value.Year == startDate &&
+                            o.PracticeDates.EndDate.Value.Year == endDate &&
+                            o.PracticeDates.GradeLevel == gradeLevel &&
+                            !o.IsDeleted)
+                .ToListAsync();
         }
 
         public async Task<Organization> Create(Organization organization)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Practice.Domain.Core.Common.Enums;
 using Practice.Domain.Core.Entities;
 using Practice.Domain.Core.Stores.TeacherN;
 using Practice.Infrastructure.Context;
@@ -35,15 +36,32 @@ namespace Practice.Infrastructure.Stores
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Teacher>> GetAll()
+        public async Task<IEnumerable<Teacher>> GetAll(int startDate, int endDate, GradeLevelEnum gradeLevel)
         {
-            return await context.Teachers.AsNoTracking().Include(t => t.Students.Where(s => !s.IsDeleted)).Include(t => t.User)
-                                         .Where(t => !t.IsDeleted).OrderByDescending(t => t.Students.Count()).ToListAsync();
+            return await context.Teachers
+                .AsNoTracking()
+                .Include(t => t.Students.Where(s => !s.IsDeleted))
+                .Include(t => t.User)
+                .Include(t => t.PracticeDates)
+                .Where(t => t.PracticeDates.StartDate.Value.Year == startDate &&
+                            t.PracticeDates.EndDate.Value.Year == endDate &&
+                            t.PracticeDates.GradeLevel == gradeLevel &&
+                            !t.IsDeleted)
+                .OrderByDescending(t => t.Students.Count())
+                .ToListAsync();
         }
 
-        public async Task<IEnumerable<Teacher>> GetAllWithCredentials()
+        public async Task<IEnumerable<Teacher>> GetAllWithCredentials(int startDate, int endDate, GradeLevelEnum gradeLevel)
         {
-            return await context.Teachers.AsNoTracking().Include(t => t.User).Where(t => !t.IsDeleted).ToListAsync();
+            return await context.Teachers
+                .AsNoTracking()
+                .Include(t => t.User)
+                .Include(t => t.PracticeDates)
+                .Where(t => t.PracticeDates.StartDate.Value.Year == startDate &&
+                            t.PracticeDates.EndDate.Value.Year == endDate &&
+                            t.PracticeDates.GradeLevel == gradeLevel &&
+                            !t.IsDeleted)
+                .ToListAsync();
         }
 
         public async Task<Teacher> Create(Teacher teacher)

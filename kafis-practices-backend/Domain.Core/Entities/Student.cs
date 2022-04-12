@@ -27,7 +27,6 @@ namespace Practice.Domain.Core.Entities
         public Guid? OrganizationId { get; set; }
         public Guid UserId { get; set; }
         public Guid? PracticeDatesId { get; set; }
-        public Guid? RunId { get; set; }
 
         public User User { get; set; }
         public Teacher Teacher { get; set; }

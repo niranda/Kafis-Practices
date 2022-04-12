@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Practice.Application.DTOs.User.Teacher;
+using Practice.Application.Models;
 using Practice.Application.Services.TeacherN;
 using Practice.Domain.Core.Common.Constants;
 using Practice.WebAPI.Filters;
@@ -48,17 +49,17 @@ namespace Practice.WebAPI.Controllers
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpPost("all")]
         //GET: api/Teachers/all
-        public async Task<IActionResult> GetTeachers()
+        public async Task<IActionResult> GetTeachers(RunRequestParams parameters)
         {
-            return Ok(await teacherService.GetAllTeachers());
+            return Ok(await teacherService.GetAllTeachers(parameters));
         }
 
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpPost("credentials")]
         //GET: api/Teacher/credentials
-        public async Task<IActionResult> GetTeachersWithCredentials()
+        public async Task<IActionResult> GetTeachersWithCredentials(RunRequestParams parameters)
         {
-            return Ok(await teacherService.GetAllTeachersWithCredentials());
+            return Ok(await teacherService.GetAllTeachersWithCredentials(parameters));
         }
 
         [Authorize(Roles = RoleNameConstants.Admin)]
