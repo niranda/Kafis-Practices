@@ -39,8 +39,8 @@ namespace Practice.WebAPI.Controllers
         }
 
         [Authorize(Roles = RoleNameConstants.Admin)]
-        [HttpGet]
-        //GET: api/Organization
+        [HttpPost("all")]
+        //POST: api/Organization/all
         public async Task<IActionResult> GetOrganizations(RunRequestParams parameters)
         {
             return Ok(await organizationService.GetAllOrganizations(parameters));

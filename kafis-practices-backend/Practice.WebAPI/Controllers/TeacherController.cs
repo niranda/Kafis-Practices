@@ -48,7 +48,7 @@ namespace Practice.WebAPI.Controllers
 
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpPost("all")]
-        //GET: api/Teachers/all
+        //POST: api/Teacher/all
         public async Task<IActionResult> GetTeachers(RunRequestParams parameters)
         {
             return Ok(await teacherService.GetAllTeachers(parameters));
@@ -56,7 +56,7 @@ namespace Practice.WebAPI.Controllers
 
         [Authorize(Roles = RoleNameConstants.Admin)]
         [HttpPost("credentials")]
-        //GET: api/Teacher/credentials
+        //POST: api/Teacher/credentials
         public async Task<IActionResult> GetTeachersWithCredentials(RunRequestParams parameters)
         {
             return Ok(await teacherService.GetAllTeachersWithCredentials(parameters));
